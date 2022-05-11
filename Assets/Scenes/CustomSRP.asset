@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a339023d2c07694492ec4601828695e, type: 3}
+  m_Name: CustomSRP
+  m_EditorClassIdentifier: 
+  customRenderPipelineSetting:
+    enableDynamicBatching: 0
+    enableInstancing: 1
+    enableSRPBathing: 1
+    lightsUseLinearIntensity: 1
+    useLightsPerObject: 1
+    crossFadeAniDuration: 0.5
+    shadowSettings:
+      maxDistance: 100
+      distanceFadeRitio: 0.1
+      diractional:
+        atlasSize: 1024
+        filterMode: 0
+        blendMode: 1
+        cascadeCount: 4
+        cascadeRatio1: 0.1
+        cascadeRatio2: 0.25
+        cascadeRatio3: 0.5
+        cascadeFadeRitio: 0.1
+      other:
+        atlasSize: 2048
+        filterMode: 3
+  postFXSettings: {fileID: 11400000, guid: e76fc29c6aefeec4b97cb831d75ac315, type: 2}
+  cameraRenderShader: {fileID: 4800000, guid: 05e8eee85ff1cbb45b48a1800ac814c2, type: 3}
+  cameraBufferSettings:
+    allowHDR: 1
+    copyColor: 1
+    copyColorReflections: 0
+    copyPath: 1
+    copyDepthReflections: 0
+    renderScale: 1
+    bicubicRescalling: 1
+    fxaa:
+      enable: 1
+      threshold: 0.0312
+      relativeThreshold: 0.0833
+      subpixelBlending: 1
+      quality: 2
