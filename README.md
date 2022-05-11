@@ -23,6 +23,7 @@
 - **[HLSL 文档](https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl)**
 - **[Unity官方手册](https://docs.unity3d.com/Manual/Graphics.html)**
 - **[CG 文档](https://developer.download.nvidia.com/cg/index.html)**
+- **[线性代数的本质](https://www.bilibili.com/video/BV1Ys411k7yQ?share_source=copy_web)**
 - **《3D数学基础:图形与游戏开发》**
 
 --------------------------------------------------------------------------------------------
