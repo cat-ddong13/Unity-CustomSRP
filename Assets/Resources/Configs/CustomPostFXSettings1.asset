@@ -37,7 +37,7 @@ MonoBehaviour:
     temperature: 3
     tint: 17
   splitToning:
-    shadows: {r: 0.9622642, g: 0.79432184, b: 0.79432184, a: 1}
+    shadows: {r: 1, g: 1, b: 1, a: 1}
     highLights: {r: 0.86853385, g: 1, b: 0.8349056, a: 1}
     balance: 32
   channelMixer:
