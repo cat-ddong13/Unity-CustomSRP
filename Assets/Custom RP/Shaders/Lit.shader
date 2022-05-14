@@ -49,6 +49,7 @@
         ENDHLSL
         Pass
         {
+            Name "Custom Lit"
             Tags
             {
                 "LightMode" = "CustomLit"
@@ -101,6 +102,7 @@
         }
         Pass
         {
+            Name "Custom ShadowCaster"
             Tags
             {
                 "LightMode" = "ShadowCaster"
@@ -125,6 +127,7 @@
         }
         Pass
         {
+            Name "Custom Meta"
             //metapass
             //https://docs.unity3d.com/cn/current/Manual/MetaPass.html
             Tags

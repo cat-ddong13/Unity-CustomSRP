@@ -18,6 +18,7 @@
         ENDHLSL
         Pass
         {
+            Name "Custom Unlit"
             Blend [_SrcBlend] [_DstBlend],One OneMinusSrcAlpha
             ZWrite [_ZWrite]
             HLSLPROGRAM
@@ -32,6 +33,7 @@
             #pragma fragment UnlitPassFragment
             ENDHLSL
         }
+        
         Pass
         {
             Tags
@@ -54,6 +56,8 @@
             #pragma fragment ShadowCasterPassFragment
             ENDHLSL
         }
+        
+        
         Pass
         {
             Tags
@@ -71,6 +75,23 @@
             #pragma fragment MetaPassFragment
             ENDHLSL
         }
+//        UsePass "Custom RP/Toon/Outlines/OUTLINES"
+        
+//        Pass
+//        {
+//            Name "Outlines"
+//            Blend One One
+////            ZWrite Off
+////            ColorMask 0
+//            HLSLPROGRAM
+//            #pragma target 3.5
+//            // #include "Assets/Custom RP/ShaderLibrary/Common.hlsl"
+//            // #include "Assets/Custom RP/Shaders/UnlitInput.hlsl"
+//            #include "Assets/Shaders/NPR/Outlines.hlsl"
+//            #pragma vertex DefaultVertex
+//            #pragma fragment DefaultFragment
+//            ENDHLSL
+//        }
     }
     CustomEditor "Rendering.CusomSRP.Editor.CustomShaderGUI"
 }

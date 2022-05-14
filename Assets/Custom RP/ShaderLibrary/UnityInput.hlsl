@@ -1,49 +1,17 @@
 #ifndef CUSTOM_UNITY_INPUT_INCLUDED
 #define CUSTOM_UNITY_INPUT_INCLUDED
 
-float4x4 unity_MatrixV;
-float4x4 unity_MatrixVP;
-float4x4 glstate_matrix_projection;
-float3 _WorldSpaceCameraPos;
-
 CBUFFER_START(UnityPerDraw)
 
 float4x4 unity_ObjectToWorld;
 float4x4 unity_WorldToObject;
+float4x4 unity_MatrixMV;
 
 // x:淡入淡出的渐变因子,范围[0,1]
 // y:淡入淡出的渐变因子,范围[0,15/16]，分16个级别0/16、1/16…15/16
 float4 unity_LODFade;
 // 模型的scale值是三维向量，即xyz，当这三个值中有奇数个值为负时（1、3个），unity_WorldTransformParams.w = -1，否则为1.
 real4 unity_WorldTransformParams;
-
-// x = 1或-1 (-1表示投影被翻转)
-// y = 近裁剪面
-// z = 远裁剪面
-// w = 1/远裁剪面
-float4 _ProjectionParams;
-// xy: 正交摄像机的宽度和高度 z:没有定义
-// w:1.0(正交摄像机) w:0.0(透视摄像机)
-float4 unity_OrthoParams;
-
-// 屏幕参数，单位为像素
-// x = width
-// y = height
-// z = 1 + 1.0 / width
-// w = 1 + 1.0 / height
-float4 _ScreenParams;
-
-// ZBuffer线性化(http://www.humus.name/temp/Linearize%20depth.txt)
-// x = 1-far/near
-// y = far/near
-// z = x/far
-// w = y/far
-// 如果是Z反转的话(UNITY_REVERSED_Z == 1)
-// x = -1+far/near
-// y = 1
-// z = x/far
-// w = 1/far
-float4 _ZBufferParams;
 
 // y:灯光数
 real4 unity_LightData;
@@ -87,5 +55,38 @@ float4x4 unity_ProbeVolumeWorldToObject;
 float4 unity_RenderingLayer;
 
 CBUFFER_END
+
+float4x4 unity_MatrixITMV;
+float4x4 unity_MatrixV;
+float4x4 unity_MatrixVP;
+float4x4 glstate_matrix_projection;
+float3 _WorldSpaceCameraPos;
+// x = 1或-1 (-1表示投影被翻转)
+// y = 近裁剪面
+// z = 远裁剪面
+// w = 1/远裁剪面
+float4 _ProjectionParams;
+// xy: 正交摄像机的宽度和高度 z:没有定义
+// w:1.0(正交摄像机) w:0.0(透视摄像机)
+float4 unity_OrthoParams;
+
+// 屏幕参数，单位为像素
+// x = width
+// y = height
+// z = 1 + 1.0 / width
+// w = 1 + 1.0 / height
+float4 _ScreenParams;
+
+// ZBuffer线性化(http://www.humus.name/temp/Linearize%20depth.txt)
+// x = 1-far/near
+// y = far/near
+// z = x/far
+// w = y/far
+// 如果是Z反转的话(UNITY_REVERSED_Z == 1)
+// x = -1+far/near
+// y = 1
+// z = x/far
+// w = 1/far
+float4 _ZBufferParams;
 
 #endif

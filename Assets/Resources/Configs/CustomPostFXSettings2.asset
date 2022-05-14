@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: CustomPostFXSettings2
   m_EditorClassIdentifier: 
   shader: {fileID: 4800000, guid: 156c47a70ed93124395c36b81266f74d, type: 3}
-  enabled: 0
+  enabled: 1
   bloom:
     mode: 1
     scatter: 0.323
     intensity: 1
-    maxIterations: 0
+    maxIterations: 2
     downscaleLimit: 1
     bicubicUpsampling: 0
     threshold: 1
@@ -29,10 +29,10 @@ MonoBehaviour:
     mode: 0
   colorAdjustments:
     postExposure: 0
-    colorFilter: {r: 0.9622642, g: 0.44028127, b: 0.44028127, a: 0}
-    contrast: 100
-    hueShift: 95
-    saturation: 41
+    colorFilter: {r: 1, g: 1, b: 1, a: 0}
+    contrast: 0
+    hueShift: 0
+    saturation: 0
   whiteBalance:
     temperature: 0
     tint: 0

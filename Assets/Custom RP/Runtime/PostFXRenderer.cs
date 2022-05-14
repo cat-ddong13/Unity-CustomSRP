@@ -5,7 +5,7 @@ namespace Rendering.CustomSRP.Runtime
 {
     using FinalBlendMode = CameraSettings.FinalBlendMode;
     using BicubicRescalingMode = CameraBufferSettings.BicubicRescalingMode;
-    
+
     internal partial class PostFXRenderer
     {
         private const string BUFFER_NAME = "Post FX";
@@ -49,7 +49,7 @@ namespace Rendering.CustomSRP.Runtime
             this.keepAlpha = keepAlpha;
 
             postBloom.Setup(camera, buffer, bufferSize, settings.Material, useHDR);
-            postColorGradingToneMapping.Setup(camera, buffer, bufferSize, settings.Material);
+            postColorGradingToneMapping.Setup(buffer, bufferSize, settings.Material, useHDR);
 
             // 忽略不支持后处理的scene窗口
             ApplySceneViewState();

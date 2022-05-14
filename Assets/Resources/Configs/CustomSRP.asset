@@ -24,7 +24,7 @@ MonoBehaviour:
       distanceFadeRitio: 0.1
       diractional:
         atlasSize: 1024
-        filterMode: 0
+        filterMode: 2
         blendMode: 1
         cascadeCount: 4
         cascadeRatio1: 0.1
@@ -32,12 +32,12 @@ MonoBehaviour:
         cascadeRatio3: 0.5
         cascadeFadeRitio: 0.1
       other:
-        atlasSize: 2048
-        filterMode: 3
-  postFXSettings: {fileID: 11400000, guid: e76fc29c6aefeec4b97cb831d75ac315, type: 2}
+        atlasSize: 1024
+        filterMode: 2
+  postFXSettings: {fileID: 11400000, guid: 82c19473a5e671742b2ea431f8e27f8c, type: 2}
   cameraRenderShader: {fileID: 4800000, guid: 05e8eee85ff1cbb45b48a1800ac814c2, type: 3}
   cameraBufferSettings:
-    allowHDR: 1
+    allowHDR: 0
     copyColor: 1
     copyColorReflections: 0
     copyPath: 1
@@ -48,5 +48,5 @@ MonoBehaviour:
       enable: 1
       threshold: 0.0312
       relativeThreshold: 0.0833
-      subpixelBlending: 1
-      quality: 2
+      subpixelBlending: 0
+      quality: 0

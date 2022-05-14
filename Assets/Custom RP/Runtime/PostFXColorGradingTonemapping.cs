@@ -19,12 +19,12 @@ namespace Rendering.CustomSRP.Runtime
         private Camera camera;
         private bool useHDR;
 
-        internal void Setup(Camera camera, CommandBuffer buffer, Vector2Int bufferSize, Material material)
+        internal void Setup(CommandBuffer buffer, Vector2Int bufferSize, Material material,bool useHDR)
         {
-            this.camera = camera;
             this.buffer = buffer;
             this.material = material;
             this.bufferSize = bufferSize;
+            this.useHDR = useHDR;
         }
 
         /// <summary>
