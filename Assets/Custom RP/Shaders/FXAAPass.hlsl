@@ -14,9 +14,9 @@
     #define EDGE_STEP_SIZES 1.5, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 4.0
     #define LAST_EDGE_STEP_GUESS 8.0
 #else
-    #define EXTRA_EDGE_STEPS 10
-    #define EDGE_STEP_SIZES 1.0, 1.0, 1.0, 1.0, 1.5, 2.0, 2.0, 2.0, 2.0, 4.0
-    #define LAST_EDGE_STEP_GUESS 8.0
+#define EXTRA_EDGE_STEPS 10
+#define EDGE_STEP_SIZES 1.0, 1.0, 1.0, 1.0, 1.5, 2.0, 2.0, 2.0, 2.0, 4.0
+#define LAST_EDGE_STEP_GUESS 8.0
 #endif
 
 // x:阈值 y:相对阈值 z:亚像素混合强度
@@ -208,9 +208,9 @@ float GetEdgeBlendFactor(LumaNeighborhood luma, FXAAEdge edge, float2 uv)
     // 反方向上的端点
     bool atEndNegative = abs(lumaDeltaNegative) >= gradientThreshold;
 
-    for (int i = 0; i < EXTRA_EDGE_STEPS && !atEndNegative; i++)
+    for (int j = 0; j < EXTRA_EDGE_STEPS && !atEndNegative; j++)
     {
-        uvNegative -= uvStep * edgeStepSizes[i];
+        uvNegative -= uvStep * edgeStepSizes[j];
         lumaDeltaNegative = GetLuma(uvNegative) - edgeLuma;
         atEndNegative = abs(lumaDeltaNegative) >= gradientThreshold;
     }
@@ -279,5 +279,7 @@ float4 FXAAPassFragment(Varyings input):SV_TARGET
 
     return GetSource(blendUV);
 }
+
+
 
 #endif

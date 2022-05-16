@@ -458,4 +458,58 @@ float4 FinalPassFragmentRescale(Varyings input):SV_TARGET
     }
 }
 
+
+float Sobel(float2 uv)
+{
+    const half Gx[9] = {
+        - 1, 0, 1,
+        - 2, 0, 2, - 1, 0, 1
+    };
+
+    const half Gy[9] = {
+        - 1, -2, -1,
+        0, 0, 0,
+        1, 2, 1,
+    };
+
+    const half2 UVs[9] = {
+        half2(-1, 1), half2(0, 1), half2(1, 1),
+        half2(-1, 0), half2(0, 0), half2(1, 0),
+        half2(-1, -1), half2(0, -1), half2(1, -1)
+    };
+
+    float texColor;
+    float edgeX = 0;
+    float edgeY = 0;
+    for (int it = 0; it < 9; it++)
+    {
+        float2 offset = UVs[it] * GetSourceTexelSize().xy;
+        texColor = Luminance(GetSource(uv + offset));
+
+        edgeX += texColor * Gx[it];
+        edgeY += texColor * Gy[it];
+    }
+
+    // edge越大，越可能是一个边缘点
+    float edge = abs(edgeX) + abs(edgeY);
+    edge = smoothstep(.0, 1., edge);
+    return edge;
+}
+
+float _PostOutlineThreshold;
+float4 _PostOutlineColor;
+
+float4 OutlineSobelPassFragment(Varyings input):SV_TARGET
+{
+    float4 sourceColor = GetSource(input.screenUV);
+    float edge = Sobel(input.screenUV);
+    if (edge > _PostOutlineThreshold)
+    {
+        float3 withEdgeColor = lerp(sourceColor.rgb, _PostOutlineColor.rgb, edge);
+        return float4(lerp(sourceColor.rgb, _PostOutlineColor.rgb, edge), sourceColor.a);
+    }
+
+    return sourceColor;
+}
+
 #endif

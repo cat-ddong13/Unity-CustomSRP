@@ -34,10 +34,10 @@ MonoBehaviour:
       other:
         atlasSize: 1024
         filterMode: 2
-  postFXSettings: {fileID: 11400000, guid: 82c19473a5e671742b2ea431f8e27f8c, type: 2}
+  postFXSettings: {fileID: 11400000, guid: 1314842750e39d643b47348827da6b9a, type: 2}
   cameraRenderShader: {fileID: 4800000, guid: 05e8eee85ff1cbb45b48a1800ac814c2, type: 3}
   cameraBufferSettings:
-    allowHDR: 0
+    allowHDR: 1
     copyColor: 1
     copyColorReflections: 0
     copyPath: 1
@@ -46,7 +46,7 @@ MonoBehaviour:
     bicubicRescalling: 1
     fxaa:
       enable: 1
-      threshold: 0.0312
-      relativeThreshold: 0.0833
-      subpixelBlending: 0
-      quality: 0
+      threshold: 0.0833
+      relativeThreshold: 0.166
+      subpixelBlending: 1
+      quality: 2

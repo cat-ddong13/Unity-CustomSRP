@@ -50,5 +50,7 @@ namespace Rendering.CustomSRP.Runtime
         // FXAA
         FXAA,
         FXAAWithLuma,
+        
+        OutlineSobel,
     }
 }

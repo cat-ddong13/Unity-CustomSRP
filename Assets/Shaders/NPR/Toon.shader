@@ -4,30 +4,39 @@ Shader "Custom RP/Toon/Toon"
     {
         _BaseMap("Texture",2D) = "white"{}
         [HDR]_BaseColor("Base Color",Color) = (1.0,1.0,1.0,1.0)
-        //# ========================================================
-        [TCP2HeaderToggle]_UserOutlines("Use Outlines",Float) = 0
-        //=# IF_PROPERTY _UserOutlines > 0
-        _Outline("Outline Width",Range(0,1)) = 0.05
-        _OutlineColor("Outline Color",Color) = (1.0,1.0,1.0,1.0)
-        //# END_IF
+        [Space(10)]
+        [Main(OutlineGroup,_ENABLE_OUTLINES)]_OutlineGroup("Outline Group",Float) = 0
+        
+        [Sub(OutlineGroup)]_OutlineWidth("Outline Width",Range(0,1)) = 0.01
+        [Sub(OutlineGroup)]_OutlineColor("Outline Color",Color) = (0.0,0.0,0.0,1.0)
+        
+        [KWEnum(OutlineGroup,ShellMethods,_,ZBias,_OUTLINE_Z_BIAS,VertexNormal,_OUTLINE_VERTEX_NORMAL)]
+        _OutlineType("Outline Type",Float) = 2
+        
+        [KWEnum(OutlineGroup_OUTLINE_VERTEX_NORMAL#_,Normal,_,Tangent,_OUTLINE_TANGENT_AS_NORMAL)]
+        _OutlineNormalSource("Outline Normal Source",Float ) = 0
+        
+        [SubToggle(OutlineGroup_OUTLINE_VERTEX_NORMAL,_OUTLINE_ZOOM_FIXED_WIDTH)]
+        _ZoomFixedWidth("Fixed Width When Zoom",Float) = 1
+        [SubToggle(OutlineGroup_OUTLINE_VERTEX_NORMAL,_OUTLINE_INCLUDE_ASPECT_RATIO)]
+        _IncludeAspectRatio("Include Aspect-Radio",Float) = 1
     }
     SubShader
     {
-        Tags
-        {
-            "LightMode" = "CustomLit"
-        }
-        HLSLINCLUDE
-        #include "Assets/Custom RP/ShaderLibrary/Common.hlsl"
-        ENDHLSL
         UsePass "Custom RP/Toon/Outlines/OUTLINES TEST"
         Pass
         {
+            Name "Toon Lit"
+            Tags
+            {
+                "LightMode" = "CustomLit"
+            }
             Cull Back
             HLSLPROGRAM
+            #include "Assets/Custom RP/ShaderLibrary/Common.hlsl"
             #include "Assets/Custom RP/Shaders/LitInput.hlsl"
             #include "ToonPasses.hlsl"
-            #define shader_feature _ _USE
+
             #pragma vertex LitPassVertex
             #pragma fragment LitPassFragment
             ENDHLSL
@@ -36,5 +45,5 @@ Shader "Custom RP/Toon/Toon"
         UsePass "Custom RP/Lit/CUSTOM META"
     }
     FallBack "Custom RP/Lit/CustomLit"
-    CustomEditor "ToonyColorsPro.ShaderGenerator.MaterialInspector_Hybrid"
+    CustomEditor "JTRP.ShaderDrawer.LWGUI"
 }

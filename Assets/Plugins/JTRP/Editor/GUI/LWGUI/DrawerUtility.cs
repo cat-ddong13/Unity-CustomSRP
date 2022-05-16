@@ -230,10 +230,20 @@ namespace JTRP.ShaderDrawer
                     if (group.Contains(prefix))
                     {
                         string suffix = group.Substring(prefix.Length, group.Length - prefix.Length).ToUpperInvariant();
-                        if (GUIData.keyWord.ContainsKey(suffix))
+                        string[] suffixs = suffix.Split("#");
+
+                        // var result = GUIData.group[prefix];
+                        var result = false;
+                        for (int i = 0; i < suffixs.Length; i++)
                         {
-                            return GUIData.keyWord[suffix] && GUIData.group[prefix];
+                            suffix = suffixs[i];
+                            if (GUIData.keyWord.ContainsKey(suffix))
+                            {
+                                result |= GUIData.keyWord[suffix];
+                            }
                         }
+                        
+                        return result && GUIData.group[prefix];
                     }
                 }
                 return false;

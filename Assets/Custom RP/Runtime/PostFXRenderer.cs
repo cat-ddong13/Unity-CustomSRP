@@ -32,6 +32,7 @@ namespace Rendering.CustomSRP.Runtime
         private bool keepAlpha;
 
         private PostFXBloom postBloom = new PostFXBloom();
+        private PostFXOutlines postFXOutlines = new PostFXOutlines();
         private PostFXColorGradingTonemapping postColorGradingToneMapping = new PostFXColorGradingTonemapping();
 
         internal void Setup(ScriptableRenderContext context, Camera camera, Vector2Int bufferSize, bool useHDR,
@@ -48,6 +49,7 @@ namespace Rendering.CustomSRP.Runtime
             this.fxaa = fxaa;
             this.keepAlpha = keepAlpha;
 
+            postFXOutlines.Setup(buffer, bufferSize, settings.Material);
             postBloom.Setup(camera, buffer, bufferSize, settings.Material, useHDR);
             postColorGradingToneMapping.Setup(buffer, bufferSize, settings.Material, useHDR);
 
@@ -59,13 +61,20 @@ namespace Rendering.CustomSRP.Runtime
         {
             var src = sourceID;
 
+          
             postBloom.Render(ref settings.bloom, ref src);
+            
+            if (settings.postOutlines.enabled)
+            {
+                postFXOutlines.Render(ref src, ref settings.postOutlines);
+            }
 
             // other post
             // …………
             // …………
             ////////////
-            /// 
+            ///
+            ///
 
             // 颜色分级和色调映射
             postColorGradingToneMapping.Render(src, fxaa.enable, keepAlpha, ref settings.colorLUTResolution,

@@ -2,107 +2,39 @@ Shader "Custom RP/Toon/Outlines"
 {
     Properties
     {
-        _Outline("Outline Width",Range(0,1)) = 0.01
+        _OutlineWidth("Outline Width",Range(0,1)) = 0.01
         _OutlineColor("Outline Color",Color) = (0.0,0.0,0.0,1.0)
+        [KWEnum(_Outline,Normal,_,Tangent,_TANGENT_AS_NORMAL)]
+        _OutlineNormalSource("Outline Normal Source",Float ) = 0
+        [KWEnum(ShellMethods,_,ZBias,_Z_BIAS,VertexNormal,_VERTEX_NORMAL)]
+        _OutlineType("Outline Type",Float) = 0
     }
     SubShader
     {
         Pass
         {
-            Name "Outlines ZBias"
-            Tags
-            {
-                "LightMode"="SRPDefaultUnlit"
-            }
-            Cull Front
-            HLSLPROGRAM
-            #pragma target 3.5
-            #include "Assets/Custom RP/ShaderLibrary/Common.hlsl"
-            #include "Outlines.hlsl"
-            #pragma vertex ZBiasVertexPass
-            #pragma fragment DefaultFragmentPass
-            ENDHLSL
-        }
-        Pass
-        {
-            Name "Outlines Vertex Normal 1"
-            Tags
-            {
-                "LightMode"="SRPDefaultUnlit"
-            }
-            Cull Front
-            HLSLPROGRAM
-            #pragma target 3.5
-            #include "Assets/Custom RP/ShaderLibrary/Common.hlsl"
-            #include "Outlines.hlsl"
-            #pragma vertex VertexNormal1VertexPass
-            #pragma fragment DefaultFragmentPass
-            ENDHLSL
-        }
-        Pass
-        {
-            Name "Outlines Vertex Normal 2"
-            Tags
-            {
-                "LightMode"="SRPDefaultUnlit"
-            }
-            Cull Front
-            HLSLPROGRAM
-            #pragma target 3.5
-            #include "Assets/Custom RP/ShaderLibrary/Common.hlsl"
-            #include "Outlines.hlsl"
-            #pragma vertex VertexNormal2VertexPass
-            #pragma fragment DefaultFragmentPass
-            ENDHLSL
-        }
-        Pass
-        {
-            Name "Outlines Vertex Shell Methords"
-            Tags
-            {
-                "LightMode"="SRPDefaultUnlit"
-            }
-            Cull Front
-            HLSLPROGRAM
-            #pragma target 3.5
-            #include "Assets/Custom RP/ShaderLibrary/Common.hlsl"
-            #include "Outlines.hlsl"
-            #pragma vertex ShellMethodsVertexPass
-            #pragma fragment DefaultFragmentPass
-            ENDHLSL
-        }
-        Pass
-        {
-            Name "Outlines Vertex Shell Methords"
-            Tags
-            {
-                "LightMode"="SRPDefaultUnlit"
-            }
-            Cull Front
-            HLSLPROGRAM
-            #pragma target 3.5
-            #include "Assets/Custom RP/ShaderLibrary/Common.hlsl"
-            #include "Outlines.hlsl"
-            #pragma vertex ShellMethodsVertexPass
-            #pragma fragment DefaultFragmentPass
-            ENDHLSL
-        }
-        Pass
-        {
             Name "Outlines Test"
-            Tags
-            {
-                "LightMode"="SRPDefaultUnlit"
-            }
+            //            Tags
+            //            {
+            //                "LightMode"="SRPDefaultUnlit"
+            //            }
             Cull Front
             HLSLPROGRAM
             #pragma target 3.5
             #include "Assets/Custom RP/ShaderLibrary/Common.hlsl"
             #include "Outlines.hlsl"
-            #pragma vertex VertexNormal1VertexPass
-            #pragma fragment DefaultFragmentPass
+
+            #pragma shader_feature _ENABLE_OUTLINES
+            #pragma shader_feature _ _OUTLINE_TANGENT_AS_NORMAL
+            #pragma shader_feature _ _OUTLINE_Z_BIAS _OUTLINE_VERTEX_NORMAL
+            #pragma shader_feature _OUTLINE_ZOOM_FIXED_WIDTH
+            #pragma shader_feature _OUTLINE_INCLUDE_ASPECT_RATIO
+
+            #pragma vertex OutlinesVertexPass
+            #pragma fragment OutlinesFragmentPass
             ENDHLSL
         }
     }
-    //    FallBack "Custom RP/Unlit"
+    CustomEditor "JTRP.ShaderDrawer.LWGUI"
+    FallBack "Custom RP/Unlit"
 }

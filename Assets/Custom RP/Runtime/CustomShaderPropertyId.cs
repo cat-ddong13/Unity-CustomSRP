@@ -152,5 +152,10 @@ namespace Rendering.CustomSRP.Runtime
 
         // fxaa
         internal static readonly int fxaaConfigId = Shader.PropertyToID("_FXAAConfig");
+
+        // postFX outline
+        internal static readonly int postOutlineTexId = Shader.PropertyToID("_PostOutlineTex");
+        internal static readonly int postOutlineThresholdId = Shader.PropertyToID("_PostOutlineThreshold");
+        internal static readonly int postOutlineColorId = Shader.PropertyToID("_PostOutlineColor");
     }
 }

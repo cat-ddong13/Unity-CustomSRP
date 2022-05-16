@@ -19,14 +19,24 @@ namespace JTRP.ShaderDrawer
         string group;
         string keyWord;
         int style;
-        public MainDrawer() : this("") { }
-        public MainDrawer(string group) : this(group, "", 0) { }
-        public MainDrawer(string group, string keyword) : this(group, keyword, 0) { }
+
+        public MainDrawer() : this("")
+        {
+        }
+
+        public MainDrawer(string group) : this(group, "", 0)
+        {
+        }
+
+        public MainDrawer(string group, string keyword) : this(group, keyword, 0)
+        {
+        }
+
         public MainDrawer(string group, string keyWord, float style)
         {
             this.group = group;
             this.keyWord = keyWord;
-            this.style = (int)style;
+            this.style = (int) style;
         }
 
         public override void OnGUI(Rect position, MaterialProperty prop, GUIContent label, MaterialEditor editor)
@@ -45,7 +55,7 @@ namespace JTRP.ShaderDrawer
                 prop.floatValue = result ? 1.0f : 0.0f;
                 Func.SetShaderKeyWord(editor.targets, Func.GetKeyWord(keyWord, prop.name), result);
             }
-            else// 有时会出现toggle激活key却未激活的情况
+            else // 有时会出现toggle激活key却未激活的情况
             {
                 if (!prop.hasMixedValue)
                     Func.SetShaderKeyWord(editor.targets, Func.GetKeyWord(keyWord, prop.name), result);
@@ -77,7 +87,10 @@ namespace JTRP.ShaderDrawer
         protected MaterialProperty prop;
         protected MaterialProperty[] props;
 
-        public SubDrawer() { }
+        public SubDrawer()
+        {
+        }
+
         public SubDrawer(string group)
         {
             this.group = group;
@@ -97,10 +110,12 @@ namespace JTRP.ShaderDrawer
                         DrawProp(position, prop, label, editor);
                     else
                     {
-                        Debug.LogWarning($"{this.GetType()} does not support this MaterialProperty type:'{prop.type}'!");
+                        Debug.LogWarning(
+                            $"{this.GetType()} does not support this MaterialProperty type:'{prop.type}'!");
                         editor.DefaultShaderProperty(prop, label.text);
                     }
                 }
+
                 EditorGUI.indentLevel--;
             }
             else
@@ -114,10 +129,12 @@ namespace JTRP.ShaderDrawer
                 }
             }
         }
+
         public override float GetPropertyHeight(MaterialProperty prop, string label, MaterialEditor editor)
         {
             return needShow ? height : -2;
         }
+
         // 绘制自定义样式属性
         public virtual void DrawProp(Rect position, MaterialProperty prop, GUIContent label, MaterialEditor editor)
         {
@@ -130,17 +147,35 @@ namespace JTRP.ShaderDrawer
     /// </summary>
     public class KWEnumDrawer : SubDrawer
     {
-        #region 
+        #region
+
         public KWEnumDrawer(string group, string n1, string k1)
-        : this(group, new string[1] { n1 }, new string[1] { k1 }) { }
+            : this(group, new string[1] {n1}, new string[1] {k1})
+        {
+        }
+
         public KWEnumDrawer(string group, string n1, string k1, string n2, string k2)
-        : this(group, new string[2] { n1, n2 }, new string[2] { k1, k2 }) { }
+            : this(group, new string[2] {n1, n2}, new string[2] {k1, k2})
+        {
+        }
+
         public KWEnumDrawer(string group, string n1, string k1, string n2, string k2, string n3, string k3)
-        : this(group, new string[3] { n1, n2, n3 }, new string[3] { k1, k2, k3 }) { }
-        public KWEnumDrawer(string group, string n1, string k1, string n2, string k2, string n3, string k3, string n4, string k4)
-        : this(group, new string[4] { n1, n2, n3, n4 }, new string[4] { k1, k2, k3, k4 }) { }
-        public KWEnumDrawer(string group, string n1, string k1, string n2, string k2, string n3, string k3, string n4, string k4, string n5, string k5)
-        : this(group, new string[5] { n1, n2, n3, n4, n5 }, new string[5] { k1, k2, k3, k4, k5 }) { }
+            : this(group, new string[3] {n1, n2, n3}, new string[3] {k1, k2, k3})
+        {
+        }
+
+        public KWEnumDrawer(string group, string n1, string k1, string n2, string k2, string n3, string k3, string n4,
+            string k4)
+            : this(group, new string[4] {n1, n2, n3, n4}, new string[4] {k1, k2, k3, k4})
+        {
+        }
+
+        public KWEnumDrawer(string group, string n1, string k1, string n2, string k2, string n3, string k3, string n4,
+            string k4, string n5, string k5)
+            : this(group, new string[5] {n1, n2, n3, n4, n5}, new string[5] {k1, k2, k3, k4, k5})
+        {
+        }
+
         public KWEnumDrawer(string group, string[] names, string[] keyWords)
         {
             this.group = group;
@@ -153,19 +188,23 @@ namespace JTRP.ShaderDrawer
                     GUIData.keyWord.Add(keyWords[i], false);
                 }
             }
+
             this.keyWords = keyWords;
             this.values = new int[keyWords.Length];
             for (int index = 0; index < keyWords.Length; ++index)
                 this.values[index] = index;
         }
+
         #endregion
+
         protected override bool matchPropType => prop.type == MaterialProperty.PropType.Float;
         string[] names, keyWords;
         int[] values;
+
         public override void DrawProp(Rect position, MaterialProperty prop, GUIContent label, MaterialEditor editor)
         {
             var rect = EditorGUILayout.GetControlRect();
-            int index = (int)prop.floatValue;
+            int index = (int) prop.floatValue;
 
             EditorGUI.BeginChangeCheck();
             EditorGUI.showMixedValue = prop.hasMixedValue;
@@ -173,8 +212,9 @@ namespace JTRP.ShaderDrawer
             EditorGUI.showMixedValue = false;
             if (EditorGUI.EndChangeCheck())
             {
-                prop.floatValue = (float)num;
+                prop.floatValue = (float) num;
             }
+
             Func.SetShaderKeyWord(editor.targets, keyWords, num);
         }
     }
@@ -186,13 +226,20 @@ namespace JTRP.ShaderDrawer
     /// </summary>
     public class TexDrawer : SubDrawer
     {
-        public TexDrawer() : this("", "") { }
-        public TexDrawer(string group) : this(group, "") { }
+        public TexDrawer() : this("", "")
+        {
+        }
+
+        public TexDrawer(string group) : this(group, "")
+        {
+        }
+
         public TexDrawer(string group, string extraPropName)
         {
             this.group = group;
             this.extraPropName = extraPropName;
         }
+
         protected override bool matchPropType => prop.type == MaterialProperty.PropType.Texture;
         string extraPropName;
 
@@ -230,18 +277,30 @@ namespace JTRP.ShaderDrawer
                 EditorGUI.showMixedValue = prop.hasMixedValue;
                 editor.TexturePropertyMiniThumbnail(r, prop, label.text, label.tooltip);
             }
+
             EditorGUI.showMixedValue = false;
         }
     }
+
     /// <summary>
     /// 支持并排最多4个颜色，支持HSV
     /// !!!注意：更改参数需要手动刷新Drawer实例，在shader中随意输入字符引发报错再撤销以刷新Drawer实例
     /// </summary>
     public class ColorDrawer : SubDrawer
     {
-        public ColorDrawer(string group, string parameter) : this(group, parameter, "", "", "") { }
-        public ColorDrawer(string group, string parameter, string color2) : this(group, parameter, color2, "", "") { }
-        public ColorDrawer(string group, string parameter, string color2, string color3) : this(group, parameter, color2, color3, "") { }
+        public ColorDrawer(string group, string parameter) : this(group, parameter, "", "", "")
+        {
+        }
+
+        public ColorDrawer(string group, string parameter, string color2) : this(group, parameter, color2, "", "")
+        {
+        }
+
+        public ColorDrawer(string group, string parameter, string color2, string color3) : this(group, parameter,
+            color2, color3, "")
+        {
+        }
+
         public ColorDrawer(string group, string parameter, string color2, string color3, string color4)
         {
             this.group = group;
@@ -250,12 +309,14 @@ namespace JTRP.ShaderDrawer
             this.colorStr[1] = color3;
             this.colorStr[2] = color4;
         }
+
         const string preHSVKeyWord = "_HSV_OTColor";
         protected override bool matchPropType => prop.type == MaterialProperty.PropType.Color;
         bool isHSV => parameter.Contains("HSV");
         bool lastHSV;
         string parameter;
         string[] colorStr = new string[3];
+
         public override void DrawProp(Rect position, MaterialProperty prop, GUIContent label, MaterialEditor editor)
         {
             Stack<MaterialProperty> cProps = new Stack<MaterialProperty>();
@@ -266,10 +327,12 @@ namespace JTRP.ShaderDrawer
                     cProps.Push(prop);
                     continue;
                 }
+
                 var p = LWGUI.FindProp(colorStr[i - 1], props);
                 if (p != null && p.type == MaterialProperty.PropType.Color)
                     cProps.Push(p);
             }
+
             int count = cProps.Count;
 
             var rect = EditorGUILayout.GetControlRect();
@@ -304,6 +367,7 @@ namespace JTRP.ShaderDrawer
                         cProp.colorValue = dst;
                 }
             }
+
             EditorGUI.showMixedValue = false;
             Func.SetShaderKeyWord(editor.targets, preHSVKeyWord, isHSV);
         }
@@ -315,14 +379,19 @@ namespace JTRP.ShaderDrawer
     /// </summary>
     public class SubToggleDrawer : SubDrawer
     {
-        public SubToggleDrawer(string group) : this(group, "") { }
+        public SubToggleDrawer(string group) : this(group, "")
+        {
+        }
+
         public SubToggleDrawer(string group, string keyWord)
         {
             this.group = group;
             this.keyWord = keyWord;
         }
+
         protected override bool matchPropType => prop.type == MaterialProperty.PropType.Float;
         string keyWord;
+
         public override void DrawProp(Rect position, MaterialProperty prop, GUIContent label, MaterialEditor editor)
         {
             EditorGUI.showMixedValue = prop.hasMixedValue;
@@ -339,6 +408,7 @@ namespace JTRP.ShaderDrawer
                 if (!prop.hasMixedValue)
                     Func.SetShaderKeyWord(editor.targets, k, value);
             }
+
             if (GUIData.keyWord.ContainsKey(k))
             {
                 GUIData.keyWord[k] = value;
@@ -347,6 +417,7 @@ namespace JTRP.ShaderDrawer
             {
                 GUIData.keyWord.Add(k, value);
             }
+
             EditorGUI.showMixedValue = false;
         }
     }
@@ -356,12 +427,16 @@ namespace JTRP.ShaderDrawer
     /// </summary>
     public class SubPowerSliderDrawer : SubDrawer
     {
-        public SubPowerSliderDrawer(string group) : this(group, 1) { }
+        public SubPowerSliderDrawer(string group) : this(group, 1)
+        {
+        }
+
         public SubPowerSliderDrawer(string group, float power)
         {
             this.group = group;
             this.power = Mathf.Clamp(power, 0, float.MaxValue);
         }
+
         protected override bool matchPropType => prop.type == MaterialProperty.PropType.Range;
         float power;
 
@@ -387,7 +462,7 @@ namespace JTRP.ShaderDrawer
         {
             EditorGUI.BeginChangeCheck();
             editor.FloatProperty(prop, label.text);
-            int queue = (int)prop.floatValue;
+            int queue = (int) prop.floatValue;
             if (EditorGUI.EndChangeCheck())
             {
                 queue = Mathf.Clamp(queue, 1000, 5000);
@@ -412,6 +487,7 @@ namespace JTRP.ShaderDrawer
             this.group = group;
             this.header = header;
         }
+
         public override float GetPropertyHeight(MaterialProperty prop, string label, MaterialEditor editor)
         {
             if (needShow)
@@ -429,7 +505,5 @@ namespace JTRP.ShaderDrawer
 
             EditorGUI.LabelField(r, new GUIContent(header), s);
         }
-
     }
-
-}//namespace ShaderDrawer
+} //namespace ShaderDrawer

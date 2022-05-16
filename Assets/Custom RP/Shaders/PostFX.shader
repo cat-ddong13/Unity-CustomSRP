@@ -6,9 +6,9 @@
         ZTest Always
         ZWrite Off
         HLSLINCLUDE
+        #pragma vertex DefaultPassVertex
         #include "../ShaderLibrary/Common.hlsl"
         #include "PostFXPasses.hlsl"
-        #pragma vertex DefaultPassVertex
         ENDHLSL
         Pass
         {
@@ -160,6 +160,15 @@
             #pragma fragment FXAAPassFragment
             #pragma multi_compile _ FXAA_QUALITY_MEDIUM FXAA_QUALITY_LOW
             #define _FXAA_WITH_LUMA_IN_ALPHA
+            #include "FXAAPass.hlsl"
+            ENDHLSL
+        }
+        Pass
+        {
+            Name "Post Outline"
+            HLSLPROGRAM
+            #pragma target 3.5
+            #pragma fragment OutlineSobelPassFragment
             #include "FXAAPass.hlsl"
             ENDHLSL
         }

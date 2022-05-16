@@ -1,6 +1,8 @@
 using System;
+using System.Data.SqlClient;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Rendering.CustomSRP.Runtime
 {
@@ -230,7 +232,7 @@ namespace Rendering.CustomSRP.Runtime
         /// 阴影-中间-高光区域的过渡
         /// </summary>
         [Serializable]
-        public struct ShadowsMidtonesHighlightsSettings
+        internal struct ShadowsMidtonesHighlightsSettings
         {
             [ColorUsage(false, true)] [SerializeField]
             private Color shadows, midtones, highlights;
@@ -266,6 +268,23 @@ namespace Rendering.CustomSRP.Runtime
             _64 = 64
         }
 
+        [Serializable]
+        internal struct PostOutlineSettings
+        {
+            internal enum OutlineType
+            {
+                Sobel,
+                Depth,
+            }
+
+            [SerializeField] internal bool enabled;
+            [SerializeField] internal OutlineType outlineType;
+
+            [SerializeField] internal Color outlineColor;
+
+            [SerializeField] [Range(0f, 1f)] internal float outlineThreshold;
+        }
+
         internal const int MAX_BLOOM_PYRAMID_LEVEL = 16;
 
         [SerializeField] internal BloomSettings bloom = new BloomSettings(0.7f);
@@ -278,13 +297,14 @@ namespace Rendering.CustomSRP.Runtime
 
         [SerializeField] internal SplitToningSettings splitToning = new SplitToningSettings(Color.gray, Color.gray);
 
-        [SerializeField]
-        internal ChannelMixerSettings channelMixer =
+        [SerializeField] internal ChannelMixerSettings channelMixer =
             new ChannelMixerSettings(Vector3.right, Vector3.up, Vector3.forward);
 
         [SerializeField] internal ShadowsMidtonesHighlightsSettings shadowsMidtonesHighlights =
             new ShadowsMidtonesHighlightsSettings(Color.white, 0.3f, 0.55f, 1f);
 
         [SerializeField] internal ColorLUTResolution colorLUTResolution = ColorLUTResolution._32;
+
+        [SerializeField] internal PostOutlineSettings postOutlines = new PostOutlineSettings();
     }
 }
