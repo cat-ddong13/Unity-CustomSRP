@@ -49,4 +49,4 @@ MonoBehaviour:
       threshold: 0.0833
       relativeThreshold: 0.166
       subpixelBlending: 1
-      quality: 2
+      quality: 0

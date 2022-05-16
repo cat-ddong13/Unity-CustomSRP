@@ -10,7 +10,6 @@ Material:
   m_Name: Toon
   m_Shader: {fileID: 4800000, guid: dddc8a0636ac4bb499c3c51e7f61d20a, type: 3}
   m_ValidKeywords:
-  - _ENABLE_OUTLINES
   - _OUTLINE_TANGENT_AS_NORMAL
   m_InvalidKeywords:
   - TCP2_OUTLINE_CONST_SIZE
@@ -154,7 +153,7 @@ Material:
     - _OcclusionChannel: 0
     - _OcclusionStrength: 1
     - _Outline: 0
-    - _OutlineGroup: 1
+    - _OutlineGroup: 0
     - _OutlineLightingType: 0
     - _OutlineLightingTypeURP: 0
     - _OutlineMaxWidth: 1

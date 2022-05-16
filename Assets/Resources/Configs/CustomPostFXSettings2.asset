@@ -18,7 +18,7 @@ MonoBehaviour:
     mode: 1
     scatter: 0.487
     intensity: 1
-    maxIterations: 2
+    maxIterations: 3
     downscaleLimit: 1
     bicubicUpsampling: 0
     threshold: 1
@@ -54,5 +54,9 @@ MonoBehaviour:
     highlightsEnd: 0
   colorLUTResolution: 32
   postOutlines:
-    outlineType: 0
-    outlineColor: {r: 0, g: 0, b: 0, a: 0}
+    enabled: 1
+    outlineType: 1
+    outlineColor: {r: 0, g: 0, b: 0, a: 1}
+    outlineThreshold: 0.682
+    outlineWidth: 0.05
+    intensity: 1143

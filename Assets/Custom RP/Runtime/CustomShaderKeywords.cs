@@ -19,4 +19,12 @@ namespace Rendering.CustomSRP.Runtime
         // 阴影遮罩关键词，两种ShadowMask模式
         internal static readonly string[] shadowMaskKeywords = {"_SHADOW_MASK_ALWAYS", "_SHADOW_MASK_DISTANCE"};
     }
+
+    internal class PostFXKeywords
+    {
+        internal const string FXAA_QUALITY_LOW_KEYWORDS = "_FXAA_QUALITY_LOW";
+        internal const string FXAA_QUALITY_MEDIUM_KEYWORDS = "_FXAA_QUALITY_MEDIUM";
+        
+        internal const string POST_OUTLINE_SOBEL_KEYWORDS = "_POST_OUTLINE_SOBEL";
+    }
 }

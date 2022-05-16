@@ -283,6 +283,9 @@ namespace Rendering.CustomSRP.Runtime
             [SerializeField] internal Color outlineColor;
 
             [SerializeField] [Range(0f, 1f)] internal float outlineThreshold;
+            [SerializeField] [Range(0f, 5f)] internal float outlineWidth;
+            [ShowIf("@outlineType == OutlineType.Depth")]
+            [SerializeField] [Range(1, 1000f)] internal float intensity;
         }
 
         internal const int MAX_BLOOM_PYRAMID_LEVEL = 16;
@@ -305,6 +308,13 @@ namespace Rendering.CustomSRP.Runtime
 
         [SerializeField] internal ColorLUTResolution colorLUTResolution = ColorLUTResolution._32;
 
-        [SerializeField] internal PostOutlineSettings postOutlines = new PostOutlineSettings();
+        [SerializeField] internal PostOutlineSettings postOutlines = new PostOutlineSettings()
+        {
+            intensity = 1,
+            outlineThreshold = 0,
+            outlineWidth = 0.2f,
+            outlineColor = Color.black,
+            outlineType = PostOutlineSettings.OutlineType.Depth
+        };
     }
 }

@@ -19,16 +19,22 @@ struct Fragment
     float bufferDepth;
 };
 
+float GetBufferDepth(float2 screenUV)
+{
+    float bufferDepth = SAMPLE_DEPTH_TEXTURE_LOD(_CameraDepthTexture, sampler_linear_clamp, screenUV, 0);
+    bufferDepth = IsOrthographicCamera()
+                        ? DepthBufferOrthographic2Linear(bufferDepth)
+                        : LinearEyeDepth(bufferDepth, _ZBufferParams);
+    return bufferDepth;
+}
+
 Fragment GetFragment(float4 positionCS)
 {
     Fragment f;
     f.positionSS = positionCS.xy;
     f.screenUV = f.positionSS * _CameraBufferSize.xy;
     f.depth = IsOrthographicCamera() ? DepthBufferOrthographic2Linear(positionCS.w) : positionCS.w;
-    f.bufferDepth = SAMPLE_DEPTH_TEXTURE_LOD(_CameraDepthTexture, sampler_linear_clamp, f.screenUV, 0);
-    f.bufferDepth = IsOrthographicCamera()
-                        ? DepthBufferOrthographic2Linear(f.bufferDepth)
-                        : LinearEyeDepth(f.bufferDepth, _ZBufferParams);
+    f.bufferDepth = GetBufferDepth(f.screenUV);
     return f;
 }
 

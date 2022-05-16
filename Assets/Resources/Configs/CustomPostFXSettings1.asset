@@ -53,3 +53,8 @@ MonoBehaviour:
     highlightsStart: 0.47
     highlightsEnd: 0.59
   colorLUTResolution: 32
+  postOutlines:
+    enabled: 0
+    outlineType: 0
+    outlineColor: {r: 0, g: 0, b: 0, a: 0}
+    outlineThreshold: 0

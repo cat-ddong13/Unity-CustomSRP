@@ -157,5 +157,7 @@ namespace Rendering.CustomSRP.Runtime
         internal static readonly int postOutlineTexId = Shader.PropertyToID("_PostOutlineTex");
         internal static readonly int postOutlineThresholdId = Shader.PropertyToID("_PostOutlineThreshold");
         internal static readonly int postOutlineColorId = Shader.PropertyToID("_PostOutlineColor");
+        internal static readonly int postOutlineWidthId = Shader.PropertyToID("_PostOutlineWidth");
+        internal static readonly int postOutlineIntensityId = Shader.PropertyToID("_PostOutlineIntensity");
     }
 }

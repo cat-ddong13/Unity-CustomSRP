@@ -54,5 +54,9 @@ MonoBehaviour:
     highlightsEnd: 0
   colorLUTResolution: 32
   postOutlines:
-    outlineType: 0
+    enabled: 1
+    outlineType: 1
     outlineColor: {r: 0, g: 0, b: 0, a: 0}
+    outlineThreshold: 1
+    outlineWidth: 0.02
+    intensity: 6579

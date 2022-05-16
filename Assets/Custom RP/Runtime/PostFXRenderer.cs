@@ -61,9 +61,9 @@ namespace Rendering.CustomSRP.Runtime
         {
             var src = sourceID;
 
-          
+
             postBloom.Render(ref settings.bloom, ref src);
-            
+
             if (settings.postOutlines.enabled)
             {
                 postFXOutlines.Render(ref src, ref settings.postOutlines);
@@ -97,6 +97,11 @@ namespace Rendering.CustomSRP.Runtime
             buffer.SetGlobalFloat(PostFXPropertyIDs.finalSrcBlendId, 1f);
             buffer.SetGlobalFloat(PostFXPropertyIDs.finalDstBlendId, 0f);
 
+            if (fxaa.enable)
+            {
+                ConfigureFXAA();
+            }
+
             // 没有调整渲染比例
             if (bufferSize.x == camera.pixelWidth)
             {
@@ -104,6 +109,7 @@ namespace Rendering.CustomSRP.Runtime
                 {
                     DrawFinal(PostFXPropertyIDs.colorGradeResultId,
                         keepAlpha ? PostFXPasses.FXAA : PostFXPasses.FXAAWithLuma);
+
                     buffer.ReleaseTemporaryRT(PostFXPropertyIDs.colorGradeResultId);
                 }
                 else
@@ -144,6 +150,35 @@ namespace Rendering.CustomSRP.Runtime
             buffer.SetGlobalTexture(PostFXPropertyIDs.fxSourceId, from);
             buffer.SetRenderTarget(to, RenderBufferLoadAction.DontCare, RenderBufferStoreAction.Store);
             buffer.DrawProcedural(Matrix4x4.identity, settings.Material, (int) pass, MeshTopology.Triangles, 3);
+        }
+
+        private void ConfigureFXAA()
+        {
+            buffer.SetGlobalVector(PostFXPropertyIDs.fxaaConfigId,
+                new Vector4(fxaa.Threshold, fxaa.RelativeThreshold, fxaa.SubpixelBlending, 0f));
+
+            switch (fxaa.FXAAQuality)
+            {
+                case CameraBufferSettings.FXAA.Quality.Low:
+                {
+                    buffer.EnableShaderKeyword(PostFXKeywords.FXAA_QUALITY_LOW_KEYWORDS);
+                    buffer.DisableShaderKeyword(PostFXKeywords.FXAA_QUALITY_MEDIUM_KEYWORDS);
+                    break;
+                }
+                case CameraBufferSettings.FXAA.Quality.Medium:
+                {
+                    buffer.DisableShaderKeyword(PostFXKeywords.FXAA_QUALITY_LOW_KEYWORDS);
+                    buffer.EnableShaderKeyword(PostFXKeywords.FXAA_QUALITY_MEDIUM_KEYWORDS);
+
+                    break;
+                }
+                case CameraBufferSettings.FXAA.Quality.High:
+                {
+                    buffer.DisableShaderKeyword(PostFXKeywords.FXAA_QUALITY_LOW_KEYWORDS);
+                    buffer.DisableShaderKeyword(PostFXKeywords.FXAA_QUALITY_MEDIUM_KEYWORDS);
+                    break;
+                }
+            }
         }
 
         /// <summary>

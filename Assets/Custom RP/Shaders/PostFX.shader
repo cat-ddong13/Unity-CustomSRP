@@ -145,7 +145,7 @@
             HLSLPROGRAM
             #pragma target 3.5
             #pragma fragment FXAAPassFragment
-            #pragma multi_compile _ FXAA_QUALITY_MEDIUM FXAA_QUALITY_LOW
+            #pragma multi_compile _ _FXAA_QUALITY_MEDIUM _FXAA_QUALITY_LOW
             #include "FXAAPass.hlsl"
             ENDHLSL
         }
@@ -158,7 +158,7 @@
             HLSLPROGRAM
             #pragma target 3.5
             #pragma fragment FXAAPassFragment
-            #pragma multi_compile _ FXAA_QUALITY_MEDIUM FXAA_QUALITY_LOW
+            #pragma multi_compile _ _FXAA_QUALITY_MEDIUM _FXAA_QUALITY_LOW
             #define _FXAA_WITH_LUMA_IN_ALPHA
             #include "FXAAPass.hlsl"
             ENDHLSL
@@ -168,7 +168,9 @@
             Name "Post Outline"
             HLSLPROGRAM
             #pragma target 3.5
-            #pragma fragment OutlineSobelPassFragment
+            #pragma multi_compile _ _POST_OUTLINE_SOBEL
+            #pragma fragment PostFXOutlinePassFragment
+            #include "../ShaderLibrary/Fragment.hlsl"
             #include "FXAAPass.hlsl"
             ENDHLSL
         }

@@ -2,14 +2,14 @@
 #define CUSTOM_FXAA_PASS_INCLUDE
 
 // fxaa 采样质量
-#if defined(FXAA_QUALITY_LOW)
+#if defined(_FXAA_QUALITY_LOW)
     // 采样步长
     #define EXTRA_EDGE_STEPS 3
     // 步长尺寸
     #define EDGE_STEP_SIZES 1.5,2.0,2.0
     // 没有找到端点时的猜测步长补偿
     #define LAST_EDGE_STEP_GUESS 8.0
-#elif defined(FXAA_QUALITY_MEDIUM)
+#elif defined(_FXAA_QUALITY_MEDIUM)
     #define EXTRA_EDGE_STEPS 8
     #define EDGE_STEP_SIZES 1.5, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 4.0
     #define LAST_EDGE_STEP_GUESS 8.0

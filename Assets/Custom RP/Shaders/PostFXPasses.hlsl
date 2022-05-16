@@ -458,8 +458,7 @@ float4 FinalPassFragmentRescale(Varyings input):SV_TARGET
     }
 }
 
-
-float Sobel(float2 uv)
+float SobelColor(float2 uv, float width = 1.0)
 {
     const half Gx[9] = {
         - 1, 0, 1,
@@ -479,35 +478,65 @@ float Sobel(float2 uv)
     };
 
     float texColor;
-    float edgeX = 0;
-    float edgeY = 0;
+    float ex = 0;
+    float ey = 0;
     for (int it = 0; it < 9; it++)
     {
-        float2 offset = UVs[it] * GetSourceTexelSize().xy;
+        float2 offset = UVs[it] * width * GetSourceTexelSize().xy;
         texColor = Luminance(GetSource(uv + offset));
 
-        edgeX += texColor * Gx[it];
-        edgeY += texColor * Gy[it];
+        ex += texColor * Gx[it];
+        ey += texColor * Gy[it];
     }
 
-    // edge越大，越可能是一个边缘点
-    float edge = abs(edgeX) + abs(edgeY);
-    edge = smoothstep(.0, 1., edge);
+    float edge = abs(ex) + abs(ey);
+    // edge = sqrt( Square(ex) + Square(ey));
+    // edge = smoothstep(.0, 1., edge);
     return edge;
 }
 
+float SobelDepth(float2 uv, float width = 1.0)
+{
+    const half2 UVs[8] = {
+        half2(-1, 1), half2(0, 1), half2(1, 1),
+        half2(-1, 0), half2(1, 0),
+        half2(-1, -1), half2(0, -1), half2(1, -1)
+    };
+
+    float depth;
+    for (int it = 0; it < 8; it++)
+    {
+        float2 offset = UVs[it] * width * _CameraBufferSize.xy;
+        depth += GetBufferDepth(uv + offset);
+    }
+
+    return depth;
+}
+
 float _PostOutlineThreshold;
+float _PostOutlineWidth;
+float _PostOutlineIntensity;
 float4 _PostOutlineColor;
 
-float4 OutlineSobelPassFragment(Varyings input):SV_TARGET
+float4 PostFXOutlinePassFragment(Varyings input):SV_TARGET
 {
     float4 sourceColor = GetSource(input.screenUV);
-    float edge = Sobel(input.screenUV);
-    if (edge > _PostOutlineThreshold)
+
+    #if defined(_POST_OUTLINE_SOBEL)
+        float intensity = SobelColor(input.screenUV,_PostOutlineWidth);
+        if (intensity > _PostOutlineThreshold)
+        {
+            return float4(lerp(sourceColor.rgb, _PostOutlineColor.rgb, intensity), sourceColor.a);
+        }
+    #else
+    float depth = GetBufferDepth(input.screenUV);
+    float roundDepth = SobelDepth(input.screenUV,_PostOutlineWidth) * 0.125;
+    float intensity = abs(depth - roundDepth)*_PostOutlineIntensity;
+    if (intensity > _PostOutlineThreshold)
     {
-        float3 withEdgeColor = lerp(sourceColor.rgb, _PostOutlineColor.rgb, edge);
-        return float4(lerp(sourceColor.rgb, _PostOutlineColor.rgb, edge), sourceColor.a);
+        return float4(lerp(sourceColor.rgb, _PostOutlineColor.rgb, intensity), sourceColor.a);
     }
+    #endif
 
     return sourceColor;
 }

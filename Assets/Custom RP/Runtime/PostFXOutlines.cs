@@ -1,10 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
 namespace Rendering.CustomSRP.Runtime
 {
+    using PostOutlineSettings = PostFXSettings.PostOutlineSettings;
+    using OutlineType = PostFXSettings.PostOutlineSettings.OutlineType;
+
     internal class PostFXOutlines
     {
         private CommandBuffer buffer;
@@ -22,8 +23,19 @@ namespace Rendering.CustomSRP.Runtime
             this.bufferSize = bufferSize;
         }
 
-        internal void Render(ref int src, ref PostFXSettings.PostOutlineSettings settings)
+        internal void Render(ref int src, ref PostOutlineSettings settings)
         {
+            if (settings.outlineType == OutlineType.Sobel)
+            {
+                buffer.EnableShaderKeyword(PostFXKeywords.POST_OUTLINE_SOBEL_KEYWORDS);
+            }
+            else
+            {
+                buffer.DisableShaderKeyword(PostFXKeywords.POST_OUTLINE_SOBEL_KEYWORDS);
+            }
+
+            buffer.SetGlobalFloat(PostFXPropertyIDs.postOutlineIntensityId,settings.intensity);
+            buffer.SetGlobalFloat(PostFXPropertyIDs.postOutlineWidthId,settings.outlineWidth);
             buffer.SetGlobalFloat(PostFXPropertyIDs.postOutlineThresholdId, settings.outlineThreshold);
             buffer.SetGlobalColor(PostFXPropertyIDs.postOutlineColorId, settings.outlineColor);
 
