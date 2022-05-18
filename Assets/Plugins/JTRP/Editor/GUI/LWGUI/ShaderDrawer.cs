@@ -148,7 +148,7 @@ namespace JTRP.ShaderDrawer
     public class KWEnumDrawer : SubDrawer
     {
         #region
-
+       
         public KWEnumDrawer(string group, string n1, string k1)
             : this(group, new string[1] {n1}, new string[1] {k1})
         {
@@ -173,6 +173,12 @@ namespace JTRP.ShaderDrawer
         public KWEnumDrawer(string group, string n1, string k1, string n2, string k2, string n3, string k3, string n4,
             string k4, string n5, string k5)
             : this(group, new string[5] {n1, n2, n3, n4, n5}, new string[5] {k1, k2, k3, k4, k5})
+        {
+        }
+        
+        public KWEnumDrawer(string group, string n1, string k1, string n2, string k2, string n3, string k3, string n4,
+            string k4, string n5, string k5,string n6,string k6)
+            : this(group, new string[6] {n1, n2, n3, n4, n5,n6}, new string[6] {k1, k2, k3, k4, k5,k6})
         {
         }
 

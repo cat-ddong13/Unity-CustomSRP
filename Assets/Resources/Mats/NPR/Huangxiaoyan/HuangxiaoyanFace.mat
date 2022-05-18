@@ -9,7 +9,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: HuangxiaoyanFace
   m_Shader: {fileID: 4800000, guid: dddc8a0636ac4bb499c3c51e7f61d20a, type: 3}
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - _ENABLE_OUTLINES
   m_InvalidKeywords:
   - _
   - _SHADOWS_ON
@@ -100,10 +101,10 @@ Material:
     - _Occlusion: 1
     - _OcclusionStrength: 1
     - _Outline: 0
-    - _OutlineGroup: 0
+    - _OutlineGroup: 1
     - _OutlineNormalSource: 0
     - _OutlineType: 0
-    - _OutlineWidth: 0.01
+    - _OutlineWidth: 0.15
     - _Parallax: 0.02
     - _PremultiplyAlpha: 0
     - _ReceiveShadows: 0

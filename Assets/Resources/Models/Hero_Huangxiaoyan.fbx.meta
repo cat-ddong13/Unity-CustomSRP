@@ -1031,17 +1031,17 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Hero_Huangxiaoyan_Body_Mat_Show
-    second: {fileID: 2100000, guid: b6fe257fdaea0a241a75a04b8e3f958c, type: 2}
+    second: {fileID: 2100000, guid: a7130d84291cd334aa338d04be65c060, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Hero_Huangxiaoyan_Face_Mat_Show
-    second: {fileID: 2100000, guid: 619791eb124a1684896a2d5e048a5cc1, type: 2}
+    second: {fileID: 2100000, guid: 21d14697d5e0193429dfba3e410d5dcc, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Hero_Huangxiaoyan_Hair_Mat_Show
-    second: {fileID: 2100000, guid: 6883389162a5252409bfdf5f44d2aed0, type: 2}
+    second: {fileID: 2100000, guid: ac22cf6af9165844091792f566127cd9, type: 2}
   materials:
     materialImportMode: 2
     materialName: 1

@@ -8,57 +8,57 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Mt_Body
-    second: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+    second: {fileID: 2100000, guid: b6fe257fdaea0a241a75a04b8e3f958c, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Mt_Bracelet
-    second: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+    second: {fileID: 2100000, guid: 153ca17fbfb5d3540a8a58e7c4c95250, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Mt_Eyeball_L
-    second: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+    second: {fileID: 2100000, guid: 9f69c8fc01b7aae47a6c7a71fa754e66, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Mt_Eyeball_R
-    second: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+    second: {fileID: 2100000, guid: 8c802840623a8ef4fb090ab715670d86, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Mt_Eyelashes
-    second: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+    second: {fileID: 2100000, guid: 275840fab98af414cbf9888fa636098f, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Mt_Face
-    second: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+    second: {fileID: 2100000, guid: 619791eb124a1684896a2d5e048a5cc1, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Mt_Hair
-    second: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+    second: {fileID: 2100000, guid: 6883389162a5252409bfdf5f44d2aed0, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Mt_Hair_Anim
-    second: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+    second: {fileID: 2100000, guid: 60b23a2552939e742b6eb4e6f29a3dc9, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Mt_Hair_Anim_2
-    second: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+    second: {fileID: 2100000, guid: 42f620671cfbef54c84cdc5e6ecc4c4f, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Mt_Skin
-    second: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+    second: {fileID: 2100000, guid: 4a59f78b3972eba49936cdbdd484f903, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Mt_Teeth
-    second: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+    second: {fileID: 2100000, guid: eafa329745f2fe248ad7601ea1b90dc8, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

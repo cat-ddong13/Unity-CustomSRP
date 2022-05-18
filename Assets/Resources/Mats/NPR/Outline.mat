@@ -10,7 +10,10 @@ Material:
   m_Name: Outline
   m_Shader: {fileID: 4800000, guid: b85fcec17ee90f54e88bf327eb977902, type: 3}
   m_ValidKeywords: []
-  m_InvalidKeywords: []
+  m_InvalidKeywords:
+  - _
+  - _SHADOWS_ON
+  - _VERTEXCOLOR__VERTEX_COLOR_CHANNEL_A
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -20,11 +23,19 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _BaseMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -44,7 +55,15 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _MaskMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -59,22 +78,63 @@ Material:
     m_Ints: []
     m_Floats:
     - _BumpScale: 1
+    - _Clipping: 0
     - _Cutoff: 0.5
+    - _DetailAlbedo: 1
+    - _DetailMapToggle: 0
     - _DetailNormalMapScale: 1
+    - _DetailNormalScale: 1
+    - _DetailSmoothness: 1
     - _DstBlend: 0
+    - _EnableConstSizeOutline: 0
+    - _EnableTexturedOutline: 0
+    - _EnableZSmooth: 0
+    - _Fresnel: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
+    - _MaskMapToggle: 0
     - _Metallic: 0
     - _Mode: 0
+    - _NormalMapToggle: 0
+    - _NormalScale: 1
+    - _Occlusion: 1
     - _OcclusionStrength: 1
+    - _Offset1: 0
+    - _Offset2: 0
+    - _Outline: 1
+    - _OutlineNormalSource: 0
+    - _OutlineType: 0
+    - _OutlineWidth: 0.01
     - _Parallax: 0.02
+    - _PremultiplyAlpha: 0
+    - _RampSmooth: 0.2
+    - _RampSmoothAdd: 0.75
+    - _RampThreshold: 0.5
+    - _ReceiveShadows: 0
+    - _RimMax: 0.85
+    - _RimMin: 0.6
+    - _RimStrength: 0.5
+    - _Shadows: 0
+    - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
+    - _SpecBlend: 1
+    - _SpecSmooth: 1
     - _SpecularHighlights: 1
     - _SrcBlend: 1
+    - _StencilRef: 1
+    - _TexLod: 5
     - _UVSec: 0
+    - _VertexColor: 0
+    - _ZSmooth: -0.5
     - _ZWrite: 1
+    - __dummy__: 0
+    - __outline_gui_dummy__: 0
     m_Colors:
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _HColor: {r: 0.785, g: 0.785, b: 0.785, a: 1}
+    - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
+    - _SColor: {r: 0.19499996, g: 0.19499996, b: 0.19499996, a: 1}
   m_BuildTextureStacks: []

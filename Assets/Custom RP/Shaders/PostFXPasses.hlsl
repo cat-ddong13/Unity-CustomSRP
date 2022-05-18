@@ -461,14 +461,15 @@ float4 FinalPassFragmentRescale(Varyings input):SV_TARGET
 float SobelColor(float2 uv, float width = 1.0)
 {
     const half Gx[9] = {
-        - 1, 0, 1,
-        - 2, 0, 2, - 1, 0, 1
-    };
-
-    const half Gy[9] = {
         - 1, -2, -1,
         0, 0, 0,
         1, 2, 1,
+    };
+    
+    const half Gy[9] = {
+        - 1, 0, 1,
+        - 2, 0, 2,
+        - 1, 0, 1
     };
 
     const half2 UVs[9] = {

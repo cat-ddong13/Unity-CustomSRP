@@ -1,0 +1,18 @@
+{
+    "AutoNames": true,
+    "SubFolders": true,
+    "OverwriteConfig": false,
+    "LoadAllShaders": false,
+    "CustomOutputPath": "/JMO Assets/Toony Colors Pro/Shaders Generated/",
+    "LastImplementationExportImportPath": "D:/UnityPro/Unity-CustomSRP/Assets",
+    "OpenedFoldouts": [
+        "STYLIZATION"
+    ],
+    "UseCustomFont": true,
+    "CustomFont": {
+        "fileID": 12800000,
+        "guid": "8a406076b7de34849be1f35585875a66",
+        "type": 3
+    },
+    "CustomFontInitialized": true
+}

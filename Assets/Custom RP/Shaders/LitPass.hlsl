@@ -93,7 +93,7 @@ float4 LitPassFragment(Varyings input):SV_TARGET
     clip(base.a - GetCutoff(ic));
     #endif
 
-    Surface surface;
+    Surface surface = (Surface)0;
     surface.position = input.positionWS;
     surface.viewDirection = normalize(_WorldSpaceCameraPos - input.positionWS);
     surface.depth = -TransformWorldToView(input.positionWS).z;

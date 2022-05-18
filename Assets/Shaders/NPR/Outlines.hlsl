@@ -1,6 +1,16 @@
 #ifndef OUTLINES_INCLUDE
 #define OUTLINES_INCLUDE
 
+struct VertexInput {
+    float4 vertex : POSITION;
+    float3 normal : NORMAL;
+    float4 tangent : TANGENT;
+    float2 texcoord0 : TEXCOORD0;
+    float2 texcoord1 : TEXCOORD1;
+    float2 texcoord2 : TEXCOORD2;
+    float4 vertexColor : COLOR;
+};
+
 struct Attributes
 {
     float3 positionOS:POSITION;
@@ -11,6 +21,8 @@ struct Attributes
     float3 normalOS:NORMAL;
     #endif
 
+    float4 vertexColor : COLOR;
+
     UNITY_VERTEX_INPUT_INSTANCE_ID
 };
 
@@ -19,6 +31,7 @@ struct Varyings
     float4 positionCS:SV_POSITION;
     float3 positionWS:VAR_POSITION;
     float3 normalWS:VAR_NORMAL;
+    float4 color:VAR_COLOR;
 
     UNITY_VERTEX_INPUT_INSTANCE_ID
 };
@@ -56,10 +69,10 @@ void VertexNormalVertexPass(Attributes input, out Varyings output)
 
     float4 positionCS = TransformObjectToHClip(input.positionOS);
     float3 normalCS = mul((float3x3)UNITY_MATRIX_VP, mul((float3x3)UNITY_MATRIX_M, input.normalOS));
-    float2 offset = normalize(normalCS.xy) * _OutlineWidth;
+    float2 offset = normalize(normalCS.xy);
 
     // 固定宽度
-    #if defined(_OUTLINE_ZOOM_FIXED_WIDTH)
+    #if !defined(_OUTLINE_ZOOM_FIXED_WIDTH)
     offset *= positionCS.w;
     #endif
 
@@ -70,9 +83,23 @@ void VertexNormalVertexPass(Attributes input, out Varyings output)
     #else
     offset *= 0.1;
     #endif
+
+    offset *= _OutlineWidth;
+
+    #if defined(_VERTEX_COLOR_CHANNEL_R)
+    offset *= input.vertexColor.r;
+    #elif defined(_VERTEX_COLOR_CHANNEL_G)
+    offset *= input.vertexColor.g;
+    #elif defined(_VERTEX_COLOR_CHANNEL_B)
+    offset *= input.vertexColor.b;
+    #elif defined(_VERTEX_COLOR_CHANNEL_A)
+    offset *= input.vertexColor.a;
+    #else
+    #endif
     
     positionCS.xy += offset;
 
+    // output.color = input.vertexColor;
     output.positionCS = positionCS;
 }
 
@@ -103,9 +130,9 @@ Varyings OutlinesVertexPass(Attributes input)
 float4 OutlinesFragmentPass(Varyings input):SV_TARGET
 {
     UNITY_SETUP_INSTANCE_ID(input);
-    #if defined(_ENABLE_OUTLINES)
 
-    return _OutlineColor;
+    #if defined(_ENABLE_OUTLINES)
+        return _OutlineColor;
     #endif
 
     return float4(1, 1, 1, 1);

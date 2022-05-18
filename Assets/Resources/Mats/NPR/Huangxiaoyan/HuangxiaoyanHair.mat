@@ -9,8 +9,13 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: HuangxiaoyanHair
   m_Shader: {fileID: 4800000, guid: dddc8a0636ac4bb499c3c51e7f61d20a, type: 3}
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - _ENABLE_OUTLINES
+  - _OUTLINE_INCLUDE_ASPECT_RATIO
+  - _OUTLINE_VERTEX_NORMAL
+  - _OUTLINE_ZOOM_FIXED_WIDTH
   m_InvalidKeywords:
+  - _
   - _SHADOWS_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -97,10 +102,10 @@ Material:
     - _Occlusion: 1
     - _OcclusionStrength: 1
     - _Outline: 0.037
-    - _OutlineGroup: 0
+    - _OutlineGroup: 1
     - _OutlineNormalSource: 0
     - _OutlineType: 2
-    - _OutlineWidth: 0.01
+    - _OutlineWidth: 0.15
     - _Parallax: 0.02
     - _PremultiplyAlpha: 0
     - _ReceiveShadows: 0

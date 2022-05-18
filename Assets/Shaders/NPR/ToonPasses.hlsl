@@ -40,14 +40,19 @@ struct Varyings
     #endif
 
     #if defined(_NORMAL_MAP)
+    float2 normalUV:VAR_NORMAL_UV;
     float4 tangentWS:VAR_TANGENT;
+    #endif
+
+    #if defined(_SPEC_MASK_MAP)
+    float2 specUV:VAR_SPEC_UV;
     #endif
 
     GI_VARYINGS_DATA
     UNITY_VERTEX_INPUT_INSTANCE_ID
 };
 
-Varyings LitPassVertex(Attributes input)
+Varyings ToonPassVertex(Attributes input)
 {
     Varyings output;
     UNITY_SETUP_INSTANCE_ID(input);
@@ -64,15 +69,24 @@ Varyings LitPassVertex(Attributes input)
     #endif
 
     #if defined(_NORMAL_MAP)
+    output.normalUV = TransformNormalUV(input.uv);
     output.tangentWS = float4(TransformObjectToWorldDir(input.tangentOS.xyz), input.tangentOS.w);
+    #endif
+
+    #if defined(_SPEC_MASK_MAP)
+    output.specUV = TransformSpecUV(input.uv);
     #endif
 
     return output;
 }
 
-float4 LitPassFragment(Varyings input):SV_TARGET
+float4 ToonPassFragment(Varyings input):SV_TARGET
 {
     UNITY_SETUP_INSTANCE_ID(input);
+
+    #if defined(_Rim_Lighting)
+    return  float4(1,0,0,1);
+    #endif
 
     InputConfig ic = GetInputConfig(input.positionCS_SS, input.uv);
 
@@ -87,13 +101,18 @@ float4 LitPassFragment(Varyings input):SV_TARGET
     ic.detailUV = input.detailUV;
     #endif
 
+    #if defined(_SPEC_MASK_MAP)
+    ic.useSpec = true;
+    ic.specUV = input.specUV;
+    #endif
+
     float4 base = GetBase(ic);
 
     #if defined(_CLIPPING)
     clip(base.a - GetCutoff(ic));
     #endif
 
-    Surface surface;
+    Surface surface = (Surface)0;
     surface.position = input.positionWS;
     surface.viewDirection = normalize(_WorldSpaceCameraPos - input.positionWS);
     surface.depth = -TransformWorldToView(input.positionWS).z;
@@ -107,6 +126,7 @@ float4 LitPassFragment(Varyings input):SV_TARGET
     surface.renderingLayerMask = asuint(unity_RenderingLayer.x);
 
     #if defined(_NORMAL_MAP)
+    ic.normalUV = input.normalUV;
     surface.normal = normalize(NormalTangentToWorld(GetNormalTS(ic), input.normalWS,
                                                     input.tangentWS));
     surface.interpolatedNormal = input.normalWS;
@@ -115,19 +135,34 @@ float4 LitPassFragment(Varyings input):SV_TARGET
     surface.interpolatedNormal = surface.normal;
     #endif
 
-    BRDF brdf;
-    #if defined(_PREMULTIPLY_ALPHA)
-    brdf = GetBRDF(surface, true);
-    #else
-    brdf = GetBRDF(surface);
+    // BRDF brdf;
+    // #if defined(_PREMULTIPLY_ALPHA)
+    // brdf = GetBRDF(surface, true);
+    // #else
+    // brdf = GetBRDF(surface);
+    // #endif
+    //
+    // float2 lightmapUV = GI_FRAGMENT_DATA(input);
+    // GI gi = GetGI(lightmapUV, surface, brdf);
+
+    #if defined(_SPEC_MASK_MAP)
+    surface.specColor = GetSpecColor(ic).rgb;
+    surface.specMaskMap = GetSpecMaskMap(ic).rgb;
+    surface.specRange = GetSpecRange(ic);
+    // return float4( GetSpecMaskMap(ic).r *GetSpecScale(ic),0,0,1 );
     #endif
 
-    float2 lightmapUV = GI_FRAGMENT_DATA(input);
-    GI gi = GetGI(lightmapUV, surface, brdf);
+    #if defined(_RIM_LIGHTING)
+    surface.rimColor = GetRimColor(ic);
+    surface.rimPower = GetRimPower(ic);
+    surface.rimThreshold = GetRimThreshold(ic);
+    #endif
 
-    float3 color = GetLighting(surface, brdf, gi);
-    // color += GetEmission(ic);
+    surface.shadowColor = GetSurfaceShadowColor(ic);
+    surface.diffuseRange = GetDiffuseRange(ic);
+    surface.shadowSmooth = GetSurfaceShadowShadowSmooth(ic);
 
+    float3 color = CelLighting(surface);
     return float4(color, GetFinalAlpha(surface.alpha));
 }
 

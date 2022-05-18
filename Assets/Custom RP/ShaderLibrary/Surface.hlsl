@@ -31,6 +31,18 @@ struct Surface
 
     // 渲染层级位掩码
     uint renderingLayerMask;
+
+    float3 specColor;
+    float3 specMaskMap;
+    float specRange;
+    
+    float3 rimColor;
+    float rimThreshold;
+    float rimPower;
+
+    float diffuseRange;
+    float3 shadowColor;
+    float shadowSmooth;
 };
 
 #endif

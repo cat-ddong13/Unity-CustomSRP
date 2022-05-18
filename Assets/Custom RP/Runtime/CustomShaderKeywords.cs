@@ -1,6 +1,6 @@
 namespace Rendering.CustomSRP.Runtime
 {
-    internal class CustomShaderKeywords
+    public class CustomShaderKeywords
     {
         // 逐对象光照关键字
         internal const string lightsPerObjectKeyword = "_LIGHTS_PER_OBJECT";
@@ -18,6 +18,7 @@ namespace Rendering.CustomSRP.Runtime
 
         // 阴影遮罩关键词，两种ShadowMask模式
         internal static readonly string[] shadowMaskKeywords = {"_SHADOW_MASK_ALWAYS", "_SHADOW_MASK_DISTANCE"};
+        
     }
 
     internal class PostFXKeywords
