@@ -41,8 +41,8 @@ struct Surface
     float rimPower;
 
     float diffuseRange;
-    float3 shadowColor;
-    float shadowSmooth;
+    float3 surfaceShadowColor;
+    float surfaceShadowSmooth;
 };
 
 #endif

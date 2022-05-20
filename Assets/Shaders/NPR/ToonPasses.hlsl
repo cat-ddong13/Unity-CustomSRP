@@ -158,9 +158,17 @@ float4 ToonPassFragment(Varyings input):SV_TARGET
     surface.rimThreshold = GetRimThreshold(ic);
     #endif
 
-    surface.shadowColor = GetSurfaceShadowColor(ic);
+    #if defined(_SHADOWS_CLIP)
+    return float4(1,0,0,1);
+    #endif
+
+    #if defined(_USE_EYE_LIGHTING)
+    return float4(surface.normal*0.1, 1);
+    #endif
+
+    surface.surfaceShadowColor = GetSurfaceShadowColor(ic);
     surface.diffuseRange = GetDiffuseRange(ic);
-    surface.shadowSmooth = GetSurfaceShadowShadowSmooth(ic);
+    surface.surfaceShadowSmooth = GetSurfaceShadowShadowSmooth(ic);
 
     float3 color = CelLighting(surface);
     return float4(color, GetFinalAlpha(surface.alpha));

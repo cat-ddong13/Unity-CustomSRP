@@ -12,6 +12,7 @@ Material:
   m_ValidKeywords:
   - _OUTLINE_INCLUDE_ASPECT_RATIO
   - _OUTLINE_VERTEX_NORMAL
+  - _RECEIVE_SHADOWS
   m_InvalidKeywords:
   - _
   - _SHADOWS_ON
@@ -84,6 +85,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SurfaceShadowMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - _BumpScale: 1
@@ -94,6 +99,8 @@ Material:
     - _DetailNormalMapScale: 1
     - _DetailNormalScale: 1
     - _DetailSmoothness: 1
+    - _DiffuseGroup: 0
+    - _DiffuseRange: 0.5
     - _DstBlend: 0
     - _Fresnel: 1
     - _GlossMapScale: 1
@@ -114,7 +121,7 @@ Material:
     - _OutlineWidth: 0.01
     - _Parallax: 0.02
     - _PremultiplyAlpha: 0
-    - _ReceiveShadows: 0
+    - _ReceiveShadows: 1
     - _RimLighting: 0
     - _RimLightingToggle: 0
     - _RimPower: 2
@@ -123,11 +130,14 @@ Material:
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecMapToggle: 0
+    - _SpecRange: 0.1
     - _SpecScale: 1
     - _SpecTexRotate: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
+    - _SurfaceShadowSmooth: 0
     - _UVSec: 0
+    - _UseSurfaceShadowRamp: 0
     - _VertexColor: 0
     - _ZWrite: 1
     - _ZoomFixedWidth: 0
@@ -138,4 +148,5 @@ Material:
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecColor: {r: 0, g: 0, b: 0, a: 0}
+    - _SurfaceShadowColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []

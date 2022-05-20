@@ -12,6 +12,7 @@ Material:
   m_ValidKeywords:
   - _OUTLINE_INCLUDE_ASPECT_RATIO
   - _OUTLINE_VERTEX_NORMAL
+  - _RECEIVE_SHADOWS
   - _SPEC_MASK_MAP
   m_InvalidKeywords:
   - _
@@ -85,6 +86,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: 0f8a58effd11f02438ced74f9964d9ed, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SurfaceShadowMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - _BumpScale: 1
@@ -117,7 +122,7 @@ Material:
     - _OutlineWidth: 0.15
     - _Parallax: 0.02
     - _PremultiplyAlpha: 0
-    - _ReceiveShadows: 0
+    - _ReceiveShadows: 1
     - _RimLightingToggle: 0
     - _RimPower: 2
     - _RimThreshold: 0.5
@@ -126,7 +131,7 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecIntensity: 1
     - _SpecMapToggle: 1
-    - _SpecRange: 1
+    - _SpecRange: 0.297
     - _SpecScale: 1
     - _SpecTexRotate: 0
     - _SpecularHighlights: 1
@@ -135,6 +140,7 @@ Material:
     - _SurfaceShadows: 0
     - _TestValue: 0
     - _UVSec: 0
+    - _UseSurfaceShadowRamp: 0
     - _VertexColor: 0
     - _ZWrite: 1
     - _ZoomFixedWidth: 0
@@ -144,6 +150,6 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
-    - _SpecColor: {r: 0, g: 0, b: 0, a: 0}
+    - _SpecColor: {r: 0.5188679, g: 0.46116573, b: 0.3450961, a: 0}
     - _SurfaceShadowColor: {r: 0.7294118, g: 0.65882355, b: 0.6, a: 1}
   m_BuildTextureStacks: []

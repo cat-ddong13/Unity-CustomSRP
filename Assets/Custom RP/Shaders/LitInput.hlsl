@@ -15,6 +15,9 @@ SAMPLER(sampler_NormalMap);
 TEXTURE2D(_SpecMaskMap);
 SAMPLER(sampler_SpecMaskMap);
 
+TEXTURE2D(_SurfaceShadowMap);
+SAMPLER(sampler_SurfaceShadowMap);
+
 // r:albedo b:smoothness
 TEXTURE2D(_DetailMap);
 SAMPLER(sampler_DetailMap);
@@ -54,6 +57,8 @@ UNITY_DEFINE_INSTANCED_PROP(float, _RimPower)
 UNITY_DEFINE_INSTANCED_PROP(float, _DiffuseRange)
 UNITY_DEFINE_INSTANCED_PROP(float4, _SurfaceShadowColor)
 UNITY_DEFINE_INSTANCED_PROP(float, _SurfaceShadowSmooth)
+UNITY_DEFINE_INSTANCED_PROP(float4, _SurfaceShadowMap_ST)
+
 
 UNITY_INSTANCING_BUFFER_END(UnityPerMaterial)
 
@@ -70,11 +75,14 @@ struct InputConfig
 
     float2 specUV;
     bool useSpec;
+
+    float2 surfShadowUV;
 };
 
-InputConfig GetInputConfig(float4 positionCS, float2 baseUV, float2 detailUV = .0, float2 normalUV = .0,float2 specUV = .0)
+InputConfig GetInputConfig(float4 positionCS, float2 baseUV, float2 detailUV = .0, float2 normalUV = .0,
+                           float2 specUV = .0)
 {
-    InputConfig ic;
+    InputConfig ic= (InputConfig)0;
     ic.fragment = GetFragment(positionCS);
     ic.baseUV = baseUV;
     ic.detailUV = detailUV;
@@ -131,10 +139,15 @@ float4 GetMask(InputConfig ic)
     return 1.0;
 }
 
+float4 GetBaseColor(InputConfig ic)
+{
+    return INPUT_PROP(_BaseColor);
+}
+
 float4 GetBase(InputConfig ic)
 {
     float4 baseMap = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, ic.baseUV);
-    float4 color = INPUT_PROP(_BaseColor);
+    float4 color = GetBaseColor(ic);
 
     if (ic.useDetail)
     {
@@ -218,13 +231,18 @@ float2 TransformSpecUV(float2 specUV)
     return specUV * specST.xy + specST.zw;
 }
 
+float2 TransformSurfaceShadowUV(float2 shadowUV)
+{
+    float4 shadowST = INPUT_PROP(_SurfaceShadowMap_ST);
+    return shadowUV * shadowST.xy + shadowST.zw;
+}
+
 float4 GetSpec(InputConfig ic)
 {
     if (ic.useSpec)
     {
         float4 specMap = SAMPLE_TEXTURE2D(_SpecMaskMap, sampler_SpecMaskMap, ic.specUV);
-        // 将范围[0,1]->[-1,1]
-        return specMap * 2.0 - 1.0;
+        return specMap;
     }
 
     return .0;
@@ -243,6 +261,24 @@ float4 GetSpecMaskMap(InputConfig ic)
     ic.specUV = uv;
     float4 specMap = GetSpec(ic);
     return specMap;
+}
+
+float4 GetSurfaceShadow(InputConfig ic)
+{
+    float4 shadowMap = SAMPLE_TEXTURE2D(_SurfaceShadowMap, sampler_SurfaceShadowMap,float2(ic.surfShadowUV.x,.0));
+    return shadowMap;
+}
+
+float GetSurfaceShadowMap(InputConfig ic)
+{
+    float4 shadowMap = GetSurfaceShadow(ic);
+    return shadowMap.r;
+}
+
+float4 GetSurfaceShadow(float2 uv)
+{
+    float4 shadowMap = SAMPLE_TEXTURE2D(_SurfaceShadowMap, sampler_SurfaceShadowMap,uv);
+    return shadowMap;
 }
 
 float GetSpecRange(InputConfig ic)

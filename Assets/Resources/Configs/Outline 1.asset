@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e03053bc3dc062847bb4207835274758, type: 3}
-  m_Name: Outline
+  m_Name: Outline 1
   m_EditorClassIdentifier: 
   shader: {fileID: 4800000, guid: 156c47a70ed93124395c36b81266f74d, type: 3}
   enabled: 1
@@ -29,10 +29,10 @@ MonoBehaviour:
     mode: 0
   colorAdjustments:
     postExposure: 0
-    colorFilter: {r: 0.69034094, g: 0.8773585, b: 0.44281775, a: 0}
-    contrast: -10
+    colorFilter: {r: 0.6200649, g: 0.8301887, b: 0.3798505, a: 0}
+    contrast: 0
     hueShift: 0
-    saturation: 30
+    saturation: 0
   whiteBalance:
     temperature: 0
     tint: 0
@@ -57,6 +57,6 @@ MonoBehaviour:
     enabled: 0
     outlineType: 1
     outlineColor: {r: 0, g: 0, b: 0, a: 0}
-    outlineThreshold: 0.096
+    outlineThreshold: 0.284
     outlineWidth: 0.1
     intensity: 1

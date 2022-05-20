@@ -68,18 +68,56 @@ float3 GetLighting(Surface surface, BRDF brdf, GI gi)
     return color;
 }
 
-float _TestValue;
+float3 CelLighting(Surface surface, Light light)
+{
+    float3 finalColor = .0;
+    float3 specular = .0;
+    
+    // 高光
+    float3 halfView = normalize(light.direction + surface.viewDirection);
+    float spec = max(0, dot(surface.normal, halfView));
+    float pixelWidth = fwidth(spec) * 0.5;
+     specular = surface.specColor * lerp(
+        0, 1, smoothstep(-pixelWidth, pixelWidth, spec + surface.specRange - 1)) * step(
+        0.0001, surface.specRange);
+    finalColor += light.color * specular * light.attenuation * surface.specMaskMap.r;
+
+    // 漫反射
+    float ndotl = dot(surface.normal, light.direction);
+    ndotl = ndotl * 0.5 + 0.5;
+    float shadowAtten = ndotl * light.attenuation;
+
+    float diffuse = (smoothstep(-pixelWidth + surface.diffuseRange, pixelWidth + surface.diffuseRange, ndotl) * surface.
+        surfaceShadowSmooth + step(surface.diffuseRange, ndotl) * (1.0 - surface.
+            surfaceShadowSmooth)) * shadowAtten;
+
+    float3 diffCol1 = diffuse * surface.color * light.color;
+    float3 diffCol2 = (1 - diffuse) * surface.surfaceShadowColor * surface.color;
+
+    #if defined(_SURFACE_SHADOW_RAMP)
+    float4 surfaceShadowRamp = GetSurfaceShadow(float2(ndotl, .0));
+    diffCol2 *= surfaceShadowRamp.r;
+    #endif
+
+    float3 diffColor = diffCol1 + diffCol2;
+    finalColor += diffColor;
+
+    //边缘光
+    #if defined(_RIM_LIGHTING)
+    float rimValue = pow(1 - dot(surface.normal, surface.viewDirection), surface.rimPower);
+    float rimStep = smoothstep(-pixelWidth + surface.rimThreshold, pixelWidth + surface.rimThreshold, rimValue);
+    float3 rimColor =  surface.color * light.color * rimStep * surface.rimColor * 2 * diffuse;
+    finalColor += rimColor;
+    #endif
+
+    return finalColor;
+}
 
 float3 CelLighting(Surface surface)
 {
     // 级联阴影数据
     ShadowData shadowData = GetShadowData(surface);
-
     float3 color = 0;
-
-    // float _SoftShadow = 0;
-    // float _DiffuseRange = 0.5;
-    // float3 _AnColor = float3(0.25, 0.25, 0.25);
 
     // 平行光
     int dirLightCount = GetDirectionalLightCount();
@@ -89,52 +127,36 @@ float3 CelLighting(Surface surface)
         // 判断渲染层是否有重叠
         if (IsRenderingLayersOverlap(surface, light))
         {
-            float3 finalColor = .0;
-
-            // 高光
-            float3 halfView = normalize(light.direction + surface.viewDirection);
-            float spec = max(0, dot(surface.normal, halfView));
-            float pixelWidth = fwidth(spec) * 2.0;
-
-            surface.specMaskMap.r = max(0, surface.specMaskMap.r);
-
-            float3 specular = light.color * surface.specColor * surface.specMaskMap.r * lerp(
-                0, 1, smoothstep(-pixelWidth, pixelWidth, spec + surface.specRange - 1)) * step(
-                0.0001, surface.specRange);
-
-            finalColor += specular;
-
-            // 漫反射
-            float ndotl = dot(surface.normal, light.direction);
-            ndotl = ndotl * 0.5 + 0.5;
-            float diffuse = surface.shadowSmooth == 1
-                                ? smoothstep(-pixelWidth + _DiffuseRange, pixelWidth + _DiffuseRange, ndotl)
-                                : step(_DiffuseRange, ndotl * light.attenuation);
-
-            // float3 diffuse = smoothstep(step(surface.diffuseRange, ndotl * light.attenuation),
-            //                             smoothstep(-pixelWidth + _DiffuseRange, pixelWidth + surface.diffuseRange,
-            //                                        ndotl),
-            //                             surface.shadowSmooth);
-            float3 diffCol1 = diffuse * INPUT_PROP(_BaseColor).rgb;
-            float3 diffCol2 = (1 - diffuse) * surface.shadowColor;
-            float3 diffColor = light.color * (diffCol1 + diffCol2) * surface.color;
-
-            finalColor += diffColor;
-
-            //边缘光
-            #if defined(_RIM_LIGHTING)
-            float rimValue = pow(1 - dot(surface.normal, surface.viewDirection), surface.rimPower);
-            float rimStep = smoothstep(-pixelWidth + surface.rimThreshold, pixelWidth + surface.rimThreshold, rimValue);
-            float3 rimColor = surface.color * light.color * rimStep * surface.rimColor * 2 * diffuse;
-            finalColor += rimColor;
-            #endif
-
-            color += finalColor;
+            color += CelLighting(surface, light);
         }
     }
 
+    //非平行光(点光源、聚光灯)
+    #if defined(_LIGHTS_PER_OBJECT)
+    // 循环8次
+    int otherLightCount = min(unity_LightData.y, 8);
+    for (int j = 0; j < otherLightCount; j++)
+    {
+        int lightIndex = unity_LightIndices[(uint)j/4][(uint)j%4];
+        Light light = GetOtherLight(lightIndex,surface,shadowData);
+        if(IsRenderingLayersOverlap(surface,light))
+        {
+            color += CelLighting(surface,light);
+        }
+    }
+    #else
+    int otherLightCount = GetOtherLightCount();
+    for (int j = 0; j < otherLightCount; j++)
+    {
+        Light light = GetOtherLight(j, surface, shadowData);
+        if (IsRenderingLayersOverlap(surface, light))
+        {
+            color += CelLighting(surface, light);
+        }
+    }
+    #endif
+
     return color;
 }
-
 
 #endif

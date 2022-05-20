@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e03053bc3dc062847bb4207835274758, type: 3}
+  m_Name: Toon
+  m_EditorClassIdentifier: 
+  shader: {fileID: 4800000, guid: 156c47a70ed93124395c36b81266f74d, type: 3}
+  enabled: 1
+  bloom:
+    mode: 1
+    scatter: 0.55
+    intensity: 1
+    maxIterations: 2
+    downscaleLimit: 1
+    bicubicUpsampling: 1
+    threshold: 1
+    thresholdKnee: 0.5
+    fadeFirefiles: 1
+    ignoreRenderScale: 0
+  tonemapping:
+    mode: 0
+  colorAdjustments:
+    postExposure: 0
+    colorFilter: {r: 0.6200649, g: 0.8301887, b: 0.3798505, a: 0}
+    contrast: -20
+    hueShift: 0
+    saturation: 20
+  whiteBalance:
+    temperature: 0
+    tint: 0
+  splitToning:
+    shadows: {r: 1, g: 1, b: 1, a: 1}
+    highLights: {r: 1, g: 1, b: 1, a: 1}
+    balance: 0
+  channelMixer:
+    r: {x: 1, y: 0, z: 0}
+    g: {x: 0, y: 1, z: 0}
+    b: {x: 0, y: 0, z: 1}
+  shadowsMidtonesHighlights:
+    shadows: {r: 1, g: 1, b: 1, a: 1}
+    midtones: {r: 1, g: 1, b: 1, a: 1}
+    highlights: {r: 1, g: 1, b: 1, a: 1}
+    shadowsStart: 0
+    shadowsEnd: 0
+    highlightsStart: 0
+    highlightsEnd: 0
+  colorLUTResolution: 32
+  postOutlines:
+    enabled: 0
+    outlineType: 1
+    outlineColor: {r: 0, g: 0, b: 0, a: 0}
+    outlineThreshold: 0.096
+    outlineWidth: 0.1
+    intensity: 1

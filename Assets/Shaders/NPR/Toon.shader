@@ -4,11 +4,13 @@ Shader "Custom RP/Toon/Toon"
     {
         _BaseMap("Texture",2D) = "white"{}
         [HDR]_BaseColor("Base Color",Color) = (1.0,1.0,1.0,1.0)
-
-        [Main(DiffuseGroup,_,2)]_DiffuseGroup("Diffuse",Float) = 0
         _DiffuseRange("Diffuse Range",Range(0,1)) = 0.5
-        _SurfaceShadowSmooth("Surface Shadow Smooth",Range(0,1)) = 0
-        _SurfaceShadowColor("Surface Shadow Color",Color) = (0.0,.0,.0,1.0)
+
+        [Main(SurfaceShadow,_,2)]_DiffuseGroup("SurfaceShadow",Float) = 0
+        [SubToggle(SurfaceShadow,_SURFACE_SHADOW_RAMP)]_UseSurfaceShadowRamp("_Use Surface Shadow Ramp",Float) = 0
+        [Sub(SurfaceShadow_SURFACE_SHADOW_RAMP)][NoScaleOffset]_SurfaceShadowMap("Surface Shadow Map",2D) = "white"{}
+        [Sub(SurfaceShadow)]_SurfaceShadowSmooth("Surface Shadow Smooth",Range(0,1)) = 0
+        [Sub(SurfaceShadow)]_SurfaceShadowColor("Surface Shadow Color",Color) = (0.0,.0,.0,1.0)
 
         [Main(SpecMapGroup,_SPEC_MASK_MAP)]_SpecMapToggle("Specular",Float) = 0
         [Sub(SpecMapGroup)][NoScaleOffset]_SpecMaskMap("Spec Mask Map",2D) = "white"{}
@@ -18,7 +20,7 @@ Shader "Custom RP/Toon/Toon"
 
         [Main(RimLightingGroup,_RIM_LIGHTING)]_RimLightingToggle("Rim Lighting",Float) = 0
         [Sub(RimLightingGroup)]_RimColor("Rim Color",Color) = (1.0,1.0,1.0,1.0)
-        [Sub(RimLightingGroup)]_RimThreshold("Rim Threshold",Float) = 0.5
+        [Sub(RimLightingGroup)]_RimThreshold("Rim Threshold",Range(0,1)) = 0.5
         [Sub(RimLightingGroup)]_RimPower("Rim Power",Float) = 2
 
         [Main(NormalMapGroup,_NORMAL_MAP)]_NormalMapToggle("Normal Map",Float) = 0
@@ -40,6 +42,11 @@ Shader "Custom RP/Toon/Toon"
 
         [KWEnum(OutlineGroup,None,_,R,_VERTEX_COLOR_CHANNEL_R,G,_VERTEX_COLOR_CHANNEL_G,B,_VERTEX_COLOR_CHANNEL_B,A,_VERTEX_COLOR_CHANNEL_A)]
         _VertexColor("Outline Vertex Color Detail",Float) = 0
+        
+        [KWEnum(_,On,_,Clip,_SHADOWS_CLIP,Dither,_SHADOWS_DITHER,Off,_SHADOW_OFF)]_Shadows("Shadows",Float) = 0
+        [Toggle(_RECEIVE_SHADOWS)]_ReceiveShadows("Receive Shadows",Float) = 0
+        
+        [Toggle(_USE_EYE_LIGHTING)]_IsEye("Is Eye",Float) = 0
     }
     SubShader
     {
@@ -53,9 +60,47 @@ Shader "Custom RP/Toon/Toon"
             }
             Cull Back
             HLSLPROGRAM
+
+            #pragma target 3.5
+
+            // 开启d3d11调试，加此命令后相关的名称与代码不会被剔除，便于在调试工具(如RenderDoc)中进行查看分析
+            #pragma enable_d3d11_debug_symbols
+
+            // 法线贴图
             #pragma shader_feature _NORMAL_MAP
+            // 遮罩图
+            #pragma shader_feature _MASK_MAP
+            // 细节图
+            #pragma shader_feature _DETAIL_MAP
+
+            // 裁剪
+            #pragma shader_feature _CLIPPING
+            // diffuse *= alpha
+            #pragma shader_feature _PREMULTIPLY_ALPHA
+            // 接收阴影
+            #pragma shader_feature _RECEIVE_SHADOWS
+
+            // 光照贴图模式
+            #pragma multi_compile _ LIGHTMAP_ON
+            // gpu-instancing
+            #pragma multi_compile_instancing
+            // 方向光阴影采样级别
+            #pragma multi_compile _ _DIRECTIONAL_PCF3 _DIRECTIONAL_PCF5 _DIRECTIONAL_PCF7
+            // 非平行光阴影采样级别
+            #pragma multi_compile _ _OTHER_PCF3 _OTHER_PCF5 _OTHER_PCF7
+            // 阴影级联融合方式
+            #pragma multi_compile _ _CASCADE_BLEND_SOFT _CASCADE_BLEND_DITHER
+            // 阴影遮罩
+            #pragma multi_compile _ _SHADOW_MASK_ALWAYS _SHADOW_MASK_DISTANCE
+            // LOD淡入淡出
+            #pragma multi_compile _ LOD_FADE_CROSSFADE
+            // 逐光照对象
+            #pragma multi_compile _ _LIGHTS_PER_OBJECT
+            
             #pragma shader_feature _SPEC_MASK_MAP
             #pragma shader_feature _RIM_LIGHTING
+            #pragma shader_feature _SURFACE_SHADOW_RAMP
+            #pragma shader_feature _USE_EYE_LIGHTING
 
             #include "Assets/Custom RP/ShaderLibrary/Common.hlsl"
             #include "Assets/Custom RP/Shaders/LitInput.hlsl"
@@ -65,6 +110,7 @@ Shader "Custom RP/Toon/Toon"
             #pragma fragment ToonPassFragment
             ENDHLSL
         }
+        
         UsePass "Custom RP/Lit/CUSTOM SHADOWCASTER"
         UsePass "Custom RP/Lit/CUSTOM META"
     }

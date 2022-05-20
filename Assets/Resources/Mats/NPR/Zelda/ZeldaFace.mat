@@ -10,16 +10,21 @@ Material:
   m_Name: ZeldaFace
   m_Shader: {fileID: 4800000, guid: dddc8a0636ac4bb499c3c51e7f61d20a, type: 3}
   m_ValidKeywords:
+  - _MASK_MAP
+  - _NORMAL_MAP
   - _OUTLINE_INCLUDE_ASPECT_RATIO
   - _OUTLINE_TANGENT_AS_NORMAL
   - _OUTLINE_VERTEX_NORMAL
+  - _RECEIVE_SHADOWS
+  - _RIM_LIGHTING
   - _SPEC_MASK_MAP
   m_InvalidKeywords:
+  - SURFACE_SHADOW_MAP
   - _
-  - _MASK_MAP
   - _SHADOWS_ON
   - _SPEC_MAP
   - _SURFACESHADOWS_ON
+  - _SURFACE_SHADOW_MAP
   - _TANGENT_AS_NORMAL
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -31,7 +36,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: 25662789c7db22e4dad01a48471fcd70, type: 3}
+        m_Texture: {fileID: 2800000, guid: 012c61443a4d8dd478df251d17e8391f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -102,6 +107,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: 59c02df5ad2906a498db5d5735017817, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SurfaceShadowMap:
+        m_Texture: {fileID: 2800000, guid: c61de89ba9d6e214189a3f6afc7cea12, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - _BumpScale: 1
@@ -113,7 +122,7 @@ Material:
     - _DetailNormalScale: 1
     - _DetailSmoothness: 1
     - _DiffuseGroup: 0
-    - _DiffuseRange: 0.558
+    - _DiffuseRange: 0.4
     - _Distortion: 0
     - _DistortionBlend: 1
     - _DistortionStrength: 0.1
@@ -124,13 +133,14 @@ Material:
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _IncludeAspectRatio: 1
+    - _IsEye: 0
     - _MaskMapToggle: 1
     - _Metallic: 0
     - _Mode: 0
     - _NearFade: 0
     - _NearFadeDistance: 1
     - _NearFadeRange: 1
-    - _NormalMapToggle: 0
+    - _NormalMapToggle: 1
     - _NormalScale: 1
     - _NormalSource: 1
     - _Occlusion: 0
@@ -139,14 +149,14 @@ Material:
     - _OutlineGroup: 0
     - _OutlineNormalSource: 0
     - _OutlineType: 2
-    - _OutlineWidth: 0.147
+    - _OutlineWidth: 0.126
     - _Parallax: 0.02
     - _PremultiplyAlpha: 0
-    - _ReceiveShadows: 0
+    - _ReceiveShadows: 1
     - _RimLighting: 1
-    - _RimLightingToggle: 0
-    - _RimPower: 2
-    - _RimThreshold: 0.5
+    - _RimLightingToggle: 1
+    - _RimPower: 3
+    - _RimThreshold: 0.121
     - _Shadows: 0
     - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
@@ -155,7 +165,7 @@ Material:
     - _SoftParticlesRange: 1
     - _SpecIntensity: 1
     - _SpecMapToggle: 1
-    - _SpecRange: 0.174
+    - _SpecRange: 0.1
     - _SpecScale: 0.118
     - _SpecTexRotate: 0
     - _SpecularHighlights: 1
@@ -164,15 +174,16 @@ Material:
     - _SurfaceShadows: 0
     - _TestValue: 0
     - _UVSec: 0
+    - _UseSurfaceShadowRamp: 0
     - _VertexColor: 0
     - _ZWrite: 1
     - _ZoomFixedWidth: 0
     m_Colors:
-    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _BaseColor: {r: 1, g: 0.8627451, b: 0.76862746, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
-    - _RimColor: {r: 0.5471698, g: 0.5187789, b: 0.5187789, a: 1}
-    - _SpecColor: {r: 0.38679248, g: 0.35532, b: 0.26090246, a: 1}
-    - _SurfaceShadowColor: {r: 0.7294118, g: 0.65882355, b: 0.6, a: 1}
+    - _OutlineColor: {r: 0.33962262, g: 0.23660211, b: 0.004805972, a: 1}
+    - _RimColor: {r: 1, g: 1, b: 1, a: 1}
+    - _SpecColor: {r: 0.24705882, g: 0.22352941, b: 0.16470589, a: 1}
+    - _SurfaceShadowColor: {r: 0.8490566, g: 0.68313587, b: 0.5486828, a: 1}
   m_BuildTextureStacks: []
