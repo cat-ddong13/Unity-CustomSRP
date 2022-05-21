@@ -44,22 +44,6 @@ UNITY_DEFINE_INSTANCED_PROP(float, _Fresnel)
 UNITY_DEFINE_INSTANCED_PROP(float, _NormalScale)
 UNITY_DEFINE_INSTANCED_PROP(float, _DetailNormalScale)
 
-// Cel
-UNITY_DEFINE_INSTANCED_PROP(float4, _SpecColor)
-UNITY_DEFINE_INSTANCED_PROP(float, _SpecRange)
-UNITY_DEFINE_INSTANCED_PROP(float4, _SpecMaskMap_ST)
-UNITY_DEFINE_INSTANCED_PROP(float, _SpecTexRotate)
-
-UNITY_DEFINE_INSTANCED_PROP(float4, _RimColor)
-UNITY_DEFINE_INSTANCED_PROP(float, _RimThreshold)
-UNITY_DEFINE_INSTANCED_PROP(float, _RimPower)
-
-UNITY_DEFINE_INSTANCED_PROP(float, _DiffuseRange)
-UNITY_DEFINE_INSTANCED_PROP(float4, _SurfaceShadowColor)
-UNITY_DEFINE_INSTANCED_PROP(float, _SurfaceShadowSmooth)
-UNITY_DEFINE_INSTANCED_PROP(float4, _SurfaceShadowMap_ST)
-
-
 UNITY_INSTANCING_BUFFER_END(UnityPerMaterial)
 
 struct InputConfig
@@ -82,7 +66,7 @@ struct InputConfig
 InputConfig GetInputConfig(float4 positionCS, float2 baseUV, float2 detailUV = .0, float2 normalUV = .0,
                            float2 specUV = .0)
 {
-    InputConfig ic= (InputConfig)0;
+    InputConfig ic = (InputConfig)0;
     ic.fragment = GetFragment(positionCS);
     ic.baseUV = baseUV;
     ic.detailUV = detailUV;
@@ -223,98 +207,5 @@ float GetFresnel(InputConfig ic)
 {
     return INPUT_PROP(_Fresnel);
 }
-
-// Cel
-float2 TransformSpecUV(float2 specUV)
-{
-    float4 specST = INPUT_PROP(_SpecMaskMap_ST);
-    return specUV * specST.xy + specST.zw;
-}
-
-float2 TransformSurfaceShadowUV(float2 shadowUV)
-{
-    float4 shadowST = INPUT_PROP(_SurfaceShadowMap_ST);
-    return shadowUV * shadowST.xy + shadowST.zw;
-}
-
-float4 GetSpec(InputConfig ic)
-{
-    if (ic.useSpec)
-    {
-        float4 specMap = SAMPLE_TEXTURE2D(_SpecMaskMap, sampler_SpecMaskMap, ic.specUV);
-        return specMap;
-    }
-
-    return .0;
-}
-
-float4 GetSpecColor(InputConfig ic)
-{
-    return INPUT_PROP(_SpecColor);
-}
-
-float4 GetSpecMaskMap(InputConfig ic)
-{
-    float specTexRotate = INPUT_PROP(_SpecTexRotate);
-    float2 uv = float2(ic.specUV.x * cos(specTexRotate) - ic.specUV.y * sin(specTexRotate),
-                       ic.specUV.x * sin(specTexRotate) + ic.specUV.y * cos(specTexRotate));
-    ic.specUV = uv;
-    float4 specMap = GetSpec(ic);
-    return specMap;
-}
-
-float4 GetSurfaceShadow(InputConfig ic)
-{
-    float4 shadowMap = SAMPLE_TEXTURE2D(_SurfaceShadowMap, sampler_SurfaceShadowMap,float2(ic.surfShadowUV.x,.0));
-    return shadowMap;
-}
-
-float GetSurfaceShadowMap(InputConfig ic)
-{
-    float4 shadowMap = GetSurfaceShadow(ic);
-    return shadowMap.r;
-}
-
-float4 GetSurfaceShadow(float2 uv)
-{
-    float4 shadowMap = SAMPLE_TEXTURE2D(_SurfaceShadowMap, sampler_SurfaceShadowMap,uv);
-    return shadowMap;
-}
-
-float GetSpecRange(InputConfig ic)
-{
-    return INPUT_PROP(_SpecRange);
-}
-
-float3 GetRimColor(InputConfig ic)
-{
-    return INPUT_PROP(_RimColor);
-}
-
-float GetRimPower(InputConfig ic)
-{
-    return INPUT_PROP(_RimPower);
-}
-
-float GetRimThreshold(InputConfig ic)
-{
-    return INPUT_PROP(_RimThreshold);
-}
-
-float GetDiffuseRange(InputConfig ic)
-{
-    return INPUT_PROP(_DiffuseRange);
-}
-
-float4 GetSurfaceShadowColor(InputConfig ic)
-{
-    return INPUT_PROP(_SurfaceShadowColor);
-}
-
-float GetSurfaceShadowShadowSmooth(InputConfig ic)
-{
-    return INPUT_PROP(_SurfaceShadowSmooth);
-}
-
 
 #endif

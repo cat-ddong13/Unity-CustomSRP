@@ -29,7 +29,7 @@ namespace Rendering.CusomSRP.Editor
             if (isUInt && mask == int.MaxValue)
                 mask = -1;
             mask = EditorGUI.MaskField(position, label, mask,
-                GraphicsSettings.currentRenderPipeline.renderingLayerMaskNames);
+                GraphicsSettings.currentRenderPipeline?.renderingLayerMaskNames);
 
             if (EditorGUI.EndChangeCheck())
             {

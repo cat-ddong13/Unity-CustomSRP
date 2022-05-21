@@ -1,0 +1,492 @@
+fileFormatVersion: 2
+guid: 2c0b12ef98feb1346b06611c0a9165d4
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Antenna_0
+    100002: Antenna_0.001
+    100004: Antenna_1
+    100006: Antenna_1.001
+    100008: Antenna_2
+    100010: Antenna_2.001
+    100012: Antenna_3
+    100014: Antenna_3.001
+    100016: Antenna_3.001_end
+    100018: Antenna_L_Lib
+    100020: Armature
+    100022: Armature.001
+    100024: Armature.002
+    100026: Armature.003
+    100028: Armature.004
+    100030: Armature.005
+    100032: Armature.006
+    100034: Armature.007
+    100036: Armature_Antenna_L_Lib
+    100038: Armature_Flesh.001_L_Lib
+    100040: Armature_Hair_L_Lib
+    100042: Body_L_Lib
+    100044: Bone.001
+    100046: Bone.001 1
+    100048: Bone.001 2
+    100050: Bone.001 3
+    100052: Bone.001 4
+    100054: Bone.001 5
+    100056: Bone.001 6
+    100058: Bone.001 7
+    100060: Bone.002
+    100062: Bone.002 1
+    100064: Bone.002 2
+    100066: Bone.002 3
+    100068: Bone.002 4
+    100070: Bone.002 5
+    100072: Bone.002 6
+    100074: Bone.002 7
+    100076: Bone.003
+    100078: Bone.003 1
+    100080: Bone.003 2
+    100082: Bone.003 3
+    100084: Bone.003 4
+    100086: Bone.003 5
+    100088: Bone.003 6
+    100090: Bone.003 7
+    100092: Bone.004
+    100094: Bone.004 1
+    100096: Bone.004 2
+    100098: Bone.004 3
+    100100: Bone.004 4
+    100102: Bone.004 5
+    100104: Bone.004 6
+    100106: Bone.004 7
+    100108: Bone.005
+    100110: Bone.005 1
+    100112: Bone.005 2
+    100114: Bone.005 3
+    100116: Bone.005 4
+    100118: Bone.005 5
+    100120: Bone.005 6
+    100122: Bone.005 7
+    100124: Bone.006
+    100126: Bone.006 1
+    100128: Bone.006 2
+    100130: Bone.006 3
+    100132: Bone.006 4
+    100134: Bone.006 5
+    100136: Bone.006 6
+    100138: Bone.006 7
+    100140: Bone.006_end
+    100142: Bone.006_end 1
+    100144: Bone.006_end 2
+    100146: Bone.006_end 3
+    100148: Bone.006_end 4
+    100150: Bone.006_end 5
+    100152: Bone.006_end 6
+    100154: Bone.006_end 7
+    100156: Control_Base_L_Lib
+    100158: Cube
+    100160: Cube.001
+    100162: Cube.002
+    100164: Cube.003
+    100166: Cube.004
+    100168: Cube.005
+    100170: Cube.006
+    100172: Cube.007
+    100174: Ear_0_L
+    100176: Ear_0_R
+    100178: Ear_1_L
+    100180: Ear_1_R
+    100182: Ear_2_L
+    100184: Ear_2_R
+    100186: Ear_3_L
+    100188: Ear_3_L_end
+    100190: Ear_3_R
+    100192: Ear_3_R_end
+    100194: Eyes_L_Lib
+    100196: Hair_Bang_0_C
+    100198: Hair_Bang_0_L
+    100200: Hair_Bang_0_R
+    100202: Hair_Bang_1_C
+    100204: Hair_Bang_1_L
+    100206: Hair_Bang_1_R
+    100208: Hair_Bang_2_C
+    100210: Hair_Bang_2_L
+    100212: Hair_Bang_2_R
+    100214: Hair_Bang_3_C
+    100216: Hair_Bang_3_L
+    100218: Hair_Bang_3_R
+    100220: Hair_Bang_4_C
+    100222: Hair_Bang_4_C_end
+    100224: Hair_Bang_4_L
+    100226: Hair_Bang_4_L_end
+    100228: Hair_Bang_4_R
+    100230: Hair_Bang_4_R_end
+    100232: Hair_L_Lib
+    100234: Hair_Tail_0_L
+    100236: Hair_Tail_0_R
+    100238: Hair_Tail_1_L
+    100240: Hair_Tail_1_R
+    100242: Hair_Tail_2_L
+    100244: Hair_Tail_2_R
+    100246: Hair_Tail_3_L
+    100248: Hair_Tail_3_L_end
+    100250: Hair_Tail_3_R
+    100252: Hair_Tail_3_R_end
+    100254: Head_L_Lib
+    100256: //RootNode
+    100258: Nose_L_Lib
+    100260: Sphere
+    100262: Sphere.001
+    100264: Sphere.002
+    100266: Sphere.003
+    100268: Sphere.004
+    100270: Sphere.004_L_Lib
+    100272: Sphere.005
+    100274: Sphere.006
+    100276: Sphere.006_L_Lib
+    100278: Sphere.007
+    100280: Sphere.008
+    100282: Tail_0
+    100284: Tail_1
+    100286: Tail_2
+    100288: Tail_2_end
+    100290: Tail_L_Lib
+    100292: Tentacle_Root_B
+    100294: Tentacle_Root_BL
+    100296: Tentacle_Root_BR
+    100298: Tentacle_Root_F
+    100300: Tentacle_Root_FR
+    100302: Tentacle_Root_FR 1
+    100304: Tentacle_Root_L
+    100306: Tentacle_Root_R
+    100308: Torus
+    100310: Torus.001
+    100312: UFO_L_Lib
+    100314: Tentacle_Root_FL
+    400000: Antenna_0
+    400002: Antenna_0.001
+    400004: Antenna_1
+    400006: Antenna_1.001
+    400008: Antenna_2
+    400010: Antenna_2.001
+    400012: Antenna_3
+    400014: Antenna_3.001
+    400016: Antenna_3.001_end
+    400018: Antenna_L_Lib
+    400020: Armature
+    400022: Armature.001
+    400024: Armature.002
+    400026: Armature.003
+    400028: Armature.004
+    400030: Armature.005
+    400032: Armature.006
+    400034: Armature.007
+    400036: Armature_Antenna_L_Lib
+    400038: Armature_Flesh.001_L_Lib
+    400040: Armature_Hair_L_Lib
+    400042: Body_L_Lib
+    400044: Bone.001
+    400046: Bone.001 1
+    400048: Bone.001 2
+    400050: Bone.001 3
+    400052: Bone.001 4
+    400054: Bone.001 5
+    400056: Bone.001 6
+    400058: Bone.001 7
+    400060: Bone.002
+    400062: Bone.002 1
+    400064: Bone.002 2
+    400066: Bone.002 3
+    400068: Bone.002 4
+    400070: Bone.002 5
+    400072: Bone.002 6
+    400074: Bone.002 7
+    400076: Bone.003
+    400078: Bone.003 1
+    400080: Bone.003 2
+    400082: Bone.003 3
+    400084: Bone.003 4
+    400086: Bone.003 5
+    400088: Bone.003 6
+    400090: Bone.003 7
+    400092: Bone.004
+    400094: Bone.004 1
+    400096: Bone.004 2
+    400098: Bone.004 3
+    400100: Bone.004 4
+    400102: Bone.004 5
+    400104: Bone.004 6
+    400106: Bone.004 7
+    400108: Bone.005
+    400110: Bone.005 1
+    400112: Bone.005 2
+    400114: Bone.005 3
+    400116: Bone.005 4
+    400118: Bone.005 5
+    400120: Bone.005 6
+    400122: Bone.005 7
+    400124: Bone.006
+    400126: Bone.006 1
+    400128: Bone.006 2
+    400130: Bone.006 3
+    400132: Bone.006 4
+    400134: Bone.006 5
+    400136: Bone.006 6
+    400138: Bone.006 7
+    400140: Bone.006_end
+    400142: Bone.006_end 1
+    400144: Bone.006_end 2
+    400146: Bone.006_end 3
+    400148: Bone.006_end 4
+    400150: Bone.006_end 5
+    400152: Bone.006_end 6
+    400154: Bone.006_end 7
+    400156: Control_Base_L_Lib
+    400158: Cube
+    400160: Cube.001
+    400162: Cube.002
+    400164: Cube.003
+    400166: Cube.004
+    400168: Cube.005
+    400170: Cube.006
+    400172: Cube.007
+    400174: Ear_0_L
+    400176: Ear_0_R
+    400178: Ear_1_L
+    400180: Ear_1_R
+    400182: Ear_2_L
+    400184: Ear_2_R
+    400186: Ear_3_L
+    400188: Ear_3_L_end
+    400190: Ear_3_R
+    400192: Ear_3_R_end
+    400194: Eyes_L_Lib
+    400196: Hair_Bang_0_C
+    400198: Hair_Bang_0_L
+    400200: Hair_Bang_0_R
+    400202: Hair_Bang_1_C
+    400204: Hair_Bang_1_L
+    400206: Hair_Bang_1_R
+    400208: Hair_Bang_2_C
+    400210: Hair_Bang_2_L
+    400212: Hair_Bang_2_R
+    400214: Hair_Bang_3_C
+    400216: Hair_Bang_3_L
+    400218: Hair_Bang_3_R
+    400220: Hair_Bang_4_C
+    400222: Hair_Bang_4_C_end
+    400224: Hair_Bang_4_L
+    400226: Hair_Bang_4_L_end
+    400228: Hair_Bang_4_R
+    400230: Hair_Bang_4_R_end
+    400232: Hair_L_Lib
+    400234: Hair_Tail_0_L
+    400236: Hair_Tail_0_R
+    400238: Hair_Tail_1_L
+    400240: Hair_Tail_1_R
+    400242: Hair_Tail_2_L
+    400244: Hair_Tail_2_R
+    400246: Hair_Tail_3_L
+    400248: Hair_Tail_3_L_end
+    400250: Hair_Tail_3_R
+    400252: Hair_Tail_3_R_end
+    400254: Head_L_Lib
+    400256: //RootNode
+    400258: Nose_L_Lib
+    400260: Sphere
+    400262: Sphere.001
+    400264: Sphere.002
+    400266: Sphere.003
+    400268: Sphere.004
+    400270: Sphere.004_L_Lib
+    400272: Sphere.005
+    400274: Sphere.006
+    400276: Sphere.006_L_Lib
+    400278: Sphere.007
+    400280: Sphere.008
+    400282: Tail_0
+    400284: Tail_1
+    400286: Tail_2
+    400288: Tail_2_end
+    400290: Tail_L_Lib
+    400292: Tentacle_Root_B
+    400294: Tentacle_Root_BL
+    400296: Tentacle_Root_BR
+    400298: Tentacle_Root_F
+    400300: Tentacle_Root_FR
+    400302: Tentacle_Root_FR 1
+    400304: Tentacle_Root_L
+    400306: Tentacle_Root_R
+    400308: Torus
+    400310: Torus.001
+    400312: UFO_L_Lib
+    400314: Tentacle_Root_FL
+    2300000: Body_L_Lib
+    2300002: Control_Base_L_Lib
+    2300004: Eyes_L_Lib
+    2300006: Nose_L_Lib
+    2300008: Sphere
+    2300010: Sphere.001
+    2300012: Sphere.002
+    2300014: Sphere.003
+    2300016: Sphere.004
+    2300018: Sphere.004_L_Lib
+    2300020: Sphere.005
+    2300022: Sphere.006
+    2300024: Sphere.006_L_Lib
+    2300026: Sphere.007
+    2300028: Sphere.008
+    2300030: Torus
+    2300032: Torus.001
+    2300034: UFO_L_Lib
+    3300000: Body_L_Lib
+    3300002: Control_Base_L_Lib
+    3300004: Eyes_L_Lib
+    3300006: Nose_L_Lib
+    3300008: Sphere
+    3300010: Sphere.001
+    3300012: Sphere.002
+    3300014: Sphere.003
+    3300016: Sphere.004
+    3300018: Sphere.004_L_Lib
+    3300020: Sphere.005
+    3300022: Sphere.006
+    3300024: Sphere.006_L_Lib
+    3300026: Sphere.007
+    3300028: Sphere.008
+    3300030: Torus
+    3300032: Torus.001
+    3300034: UFO_L_Lib
+    4300000: Sphere.008
+    4300002: Cube.007
+    4300004: Sphere.007
+    4300006: Cube.006
+    4300008: Sphere.006
+    4300010: Cube.005
+    4300012: Sphere.005
+    4300014: Cube.004
+    4300016: Sphere.004
+    4300018: Cube.003
+    4300020: Sphere.003
+    4300022: Cube.002
+    4300024: Sphere.002
+    4300026: Cube.001
+    4300028: Sphere.001
+    4300030: Cube
+    4300032: Torus.001
+    4300034: Sphere
+    4300036: Torus
+    4300038: Antenna_L_Lib
+    4300040: Head_L_Lib
+    4300042: Tail_L_Lib
+    4300044: Hair_L_Lib
+    4300046: Body_L_Lib
+    4300048: Control_Base_L_Lib
+    4300050: Eyes_L_Lib
+    4300052: Nose_L_Lib
+    4300054: Sphere.004_L_Lib
+    4300056: Sphere.006_L_Lib
+    4300058: UFO_L_Lib
+    9500000: //RootNode
+    13700000: Antenna_L_Lib
+    13700002: Cube
+    13700004: Cube.001
+    13700006: Cube.002
+    13700008: Cube.003
+    13700010: Cube.004
+    13700012: Cube.005
+    13700014: Cube.006
+    13700016: Cube.007
+    13700018: Hair_L_Lib
+    13700020: Head_L_Lib
+    13700022: Tail_L_Lib
+    2186277476908879412: ImportLogs
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: No Name
+    second: {fileID: 2100000, guid: 59a12676bec17c644bb0880a49960af5, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 0
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 0.01
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 0
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

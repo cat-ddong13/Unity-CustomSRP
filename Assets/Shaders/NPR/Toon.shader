@@ -6,6 +6,9 @@ Shader "Custom RP/Toon/Toon"
         [HDR]_BaseColor("Base Color",Color) = (1.0,1.0,1.0,1.0)
         _DiffuseRange("Diffuse Range",Range(0,1)) = 0.5
 
+        [KWEnum(_,On,_,Clip,_SHADOWS_CLIP,Dither,_SHADOWS_DITHER,Off,_SHADOW_OFF)]_Shadows("Shadows",Float) = 0
+        [Toggle(_RECEIVE_SHADOWS)]_ReceiveShadows("Receive Shadows",Float) = 0
+
         [Main(SurfaceShadow,_,2)]_DiffuseGroup("SurfaceShadow",Float) = 0
         [SubToggle(SurfaceShadow,_SURFACE_SHADOW_RAMP)]_UseSurfaceShadowRamp("_Use Surface Shadow Ramp",Float) = 0
         [Sub(SurfaceShadow_SURFACE_SHADOW_RAMP)][NoScaleOffset]_SurfaceShadowMap("Surface Shadow Map",2D) = "white"{}
@@ -42,11 +45,11 @@ Shader "Custom RP/Toon/Toon"
 
         [KWEnum(OutlineGroup,None,_,R,_VERTEX_COLOR_CHANNEL_R,G,_VERTEX_COLOR_CHANNEL_G,B,_VERTEX_COLOR_CHANNEL_B,A,_VERTEX_COLOR_CHANNEL_A)]
         _VertexColor("Outline Vertex Color Detail",Float) = 0
-        
-        [KWEnum(_,On,_,Clip,_SHADOWS_CLIP,Dither,_SHADOWS_DITHER,Off,_SHADOW_OFF)]_Shadows("Shadows",Float) = 0
-        [Toggle(_RECEIVE_SHADOWS)]_ReceiveShadows("Receive Shadows",Float) = 0
-        
-        [Toggle(_USE_EYE_LIGHTING)]_IsEye("Is Eye",Float) = 0
+
+        [Main(EyeballFocusCamera,_EYEBALL_FOCUS_CAMERA)]_RefractionToggle("Eyeball Focus Camera",Float) = 0
+        [Sub(EyeballFocusCamera)]_EyeballSize("Eyeball Size",Vector) = (0.05259,0.02881,0.0,0.0)
+        [Sub(EyeballFocusCamera)]_FocusSpeed("Focus Speed",Float) = 15
+        [Sub(EyeballFocusCamera)]_FrontNormal("Eyeball Size",Vector) = (0.05259,0.02881,0.0,0.0)
     }
     SubShader
     {
@@ -60,7 +63,6 @@ Shader "Custom RP/Toon/Toon"
             }
             Cull Back
             HLSLPROGRAM
-
             #pragma target 3.5
 
             // 开启d3d11调试，加此命令后相关的名称与代码不会被剔除，便于在调试工具(如RenderDoc)中进行查看分析
@@ -68,10 +70,6 @@ Shader "Custom RP/Toon/Toon"
 
             // 法线贴图
             #pragma shader_feature _NORMAL_MAP
-            // 遮罩图
-            #pragma shader_feature _MASK_MAP
-            // 细节图
-            #pragma shader_feature _DETAIL_MAP
 
             // 裁剪
             #pragma shader_feature _CLIPPING
@@ -94,23 +92,23 @@ Shader "Custom RP/Toon/Toon"
             #pragma multi_compile _ _SHADOW_MASK_ALWAYS _SHADOW_MASK_DISTANCE
             // LOD淡入淡出
             #pragma multi_compile _ LOD_FADE_CROSSFADE
-            // 逐光照对象
-            #pragma multi_compile _ _LIGHTS_PER_OBJECT
-            
-            #pragma shader_feature _SPEC_MASK_MAP
-            #pragma shader_feature _RIM_LIGHTING
-            #pragma shader_feature _SURFACE_SHADOW_RAMP
-            #pragma shader_feature _USE_EYE_LIGHTING
+
+            #pragma shader_feature_local _SPEC_MASK_MAP
+            #pragma shader_feature_local _RIM_LIGHTING
+            #pragma shader_feature_local _SURFACE_SHADOW_RAMP
+            #pragma shader_feature_local _USE_EYE_LIGHTING
+            #pragma shader_feature_local _EYEBALL_FOCUS_CAMERA
+
 
             #include "Assets/Custom RP/ShaderLibrary/Common.hlsl"
-            #include "Assets/Custom RP/Shaders/LitInput.hlsl"
+            #include "ToonInput.hlsl"
             #include "ToonPasses.hlsl"
 
             #pragma vertex ToonPassVertex
             #pragma fragment ToonPassFragment
             ENDHLSL
         }
-        
+
         UsePass "Custom RP/Lit/CUSTOM SHADOWCASTER"
         UsePass "Custom RP/Lit/CUSTOM META"
     }

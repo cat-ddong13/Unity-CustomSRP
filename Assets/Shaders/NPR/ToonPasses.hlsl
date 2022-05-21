@@ -80,6 +80,7 @@ Varyings ToonPassVertex(Attributes input)
     return output;
 }
 
+
 float4 ToonPassFragment(Varyings input):SV_TARGET
 {
     UNITY_SETUP_INSTANCE_ID(input);
@@ -106,23 +107,36 @@ float4 ToonPassFragment(Varyings input):SV_TARGET
     ic.specUV = input.specUV;
     #endif
 
+    Surface surface = (Surface)0;
+    surface.position = input.positionWS;
+    surface.viewDirection = normalize(_WorldSpaceCameraPos - input.positionWS);
+
+    // 眼睛注视相机
+    #if defined(_EYEBALL_FOCUS_CAMERA)
+
+    float3 frontNormal = normalize(GetFrontNormal(ic).xyz);
+
+    float ndotv = dot(frontNormal, surface.viewDirection);
+    ndotv = max(ndotv, 0.15);
+
+    float3 crossValue = cross(frontNormal, surface.viewDirection);
+    crossValue = float3(-crossValue.x, crossValue.y * ndotv, crossValue.z);
+
+    float2 xy = (1 / ndotv - 1) * GetEyeballSize(ic).xy * ndotv * GetFocusSpeed(ic);
+
+    ic.baseUV = input.uv + float2(xy.x * crossValue.y, xy.y * crossValue.x);
+
+    #endif
+
     float4 base = GetBase(ic);
 
     #if defined(_CLIPPING)
     clip(base.a - GetCutoff(ic));
     #endif
 
-    Surface surface = (Surface)0;
-    surface.position = input.positionWS;
-    surface.viewDirection = normalize(_WorldSpaceCameraPos - input.positionWS);
     surface.depth = -TransformWorldToView(input.positionWS).z;
     surface.color = base.rgb;
     surface.alpha = base.a;
-    surface.metallic = GetMetallic(ic);
-    surface.smoothness = GetSmoothness(ic);
-    surface.occlusion = GetOcclusion(ic);
-    surface.dither = InterleavedGradientNoise(input.positionCS_SS.xy, 0);
-    surface.fresnelStrength = GetFresnel(ic);
     surface.renderingLayerMask = asuint(unity_RenderingLayer.x);
 
     #if defined(_NORMAL_MAP)
@@ -149,21 +163,12 @@ float4 ToonPassFragment(Varyings input):SV_TARGET
     surface.specColor = GetSpecColor(ic).rgb;
     surface.specMaskMap = GetSpecMaskMap(ic).rgb;
     surface.specRange = GetSpecRange(ic);
-    // return float4( GetSpecMaskMap(ic).r *GetSpecScale(ic),0,0,1 );
     #endif
 
     #if defined(_RIM_LIGHTING)
     surface.rimColor = GetRimColor(ic);
     surface.rimPower = GetRimPower(ic);
     surface.rimThreshold = GetRimThreshold(ic);
-    #endif
-
-    #if defined(_SHADOWS_CLIP)
-    return float4(1,0,0,1);
-    #endif
-
-    #if defined(_USE_EYE_LIGHTING)
-    return float4(surface.normal*0.1, 1);
     #endif
 
     surface.surfaceShadowColor = GetSurfaceShadowColor(ic);

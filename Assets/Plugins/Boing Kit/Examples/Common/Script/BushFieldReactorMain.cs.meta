@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: b64d8232c7365b54ebf019df197cc002
+timeCreated: 1543734496
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - Bush: {fileID: 1486671779197282, guid: 69d9015ec7d48c44c9667a8c2cb9e7ea, type: 2}
+  - Blossom: {fileID: 1279519285001396, guid: 4b935e87141c827439ac5c1070a50b44, type: 2}
+  - Sphere: {fileID: 1887590550986244, guid: fd1b6502a2ae3c44bab9c806a67fa75b, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

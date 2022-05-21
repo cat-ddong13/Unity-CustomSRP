@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 68993f626b9054143a02c557bc391619
+timeCreated: 1543561755
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - Object: {fileID: 1695856412239626, guid: c5203f0be20cab242b0c315e8cec620e, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

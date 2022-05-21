@@ -72,12 +72,12 @@ float3 CelLighting(Surface surface, Light light)
 {
     float3 finalColor = .0;
     float3 specular = .0;
-    
+
     // 高光
     float3 halfView = normalize(light.direction + surface.viewDirection);
     float spec = max(0, dot(surface.normal, halfView));
     float pixelWidth = fwidth(spec) * 0.5;
-     specular = surface.specColor * lerp(
+    specular = surface.specColor * lerp(
         0, 1, smoothstep(-pixelWidth, pixelWidth, spec + surface.specRange - 1)) * step(
         0.0001, surface.specRange);
     finalColor += light.color * specular * light.attenuation * surface.specMaskMap.r;
@@ -109,6 +109,8 @@ float3 CelLighting(Surface surface, Light light)
     float3 rimColor =  surface.color * light.color * rimStep * surface.rimColor * 2 * diffuse;
     finalColor += rimColor;
     #endif
+
+    
 
     return finalColor;
 }

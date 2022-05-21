@@ -10,6 +10,7 @@ Material:
   m_Name: ZeldaEyeR
   m_Shader: {fileID: 4800000, guid: dddc8a0636ac4bb499c3c51e7f61d20a, type: 3}
   m_ValidKeywords:
+  - _EYEBALL_FOCUS_CAMERA
   - _NORMAL_MAP
   - _OUTLINE_INCLUDE_ASPECT_RATIO
   - _OUTLINE_VERTEX_NORMAL
@@ -18,6 +19,7 @@ Material:
   - _SPEC_MASK_MAP
   m_InvalidKeywords:
   - _
+  - _REFRACTION
   - _SHADOWS_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -88,6 +90,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: 73bed5bc60dc3a24cb2cb86b5e262cea, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SphereRadius:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SurfaceShadowMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -105,11 +111,16 @@ Material:
     - _DiffuseGroup: 0
     - _DiffuseRange: 0.5
     - _DstBlend: 0
+    - _EyeballHeight: 0.02881
+    - _EyeballRadius: 0.06228
+    - _EyeballWidth: 0.05259
+    - _FocusSpeed: 15
     - _Fresnel: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _IncludeAspectRatio: 1
+    - _IsEye: 0
     - _MaskMapToggle: 0
     - _Metallic: 0
     - _Mode: 0
@@ -125,6 +136,10 @@ Material:
     - _Parallax: 0.02
     - _PremultiplyAlpha: 0
     - _ReceiveShadows: 1
+    - _RefractionRatio: 1.00029
+    - _RefractionRatioDst: 1.336
+    - _RefractionRatioSrc: 1.00029
+    - _RefractionToggle: 1
     - _RimLighting: 0
     - _RimLightingToggle: 1
     - _RimPower: 2
@@ -138,6 +153,7 @@ Material:
     - _SpecScale: 1
     - _SpecTexRotate: 0
     - _SpecularHighlights: 1
+    - _SphereRadius: 0.1
     - _SrcBlend: 1
     - _SurfaceShadowSmooth: 0
     - _SurfaceShadows: 0
@@ -151,6 +167,9 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _EyeballSize: {r: 0.05259, g: 0.02881, b: 0, a: 0}
+    - _FrontNomral: {r: 0.05259, g: 0.02881, b: 0, a: 0}
+    - _FrontNormal: {r: -0.011780598, g: 0, b: -0.9999311, a: 0}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecColor: {r: 0.1501424, g: 0.1981132, b: 0.13923994, a: 0}
