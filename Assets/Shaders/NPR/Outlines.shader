@@ -26,7 +26,7 @@ Shader "Custom RP/Toon/Outlines"
             Cull Front
             HLSLPROGRAM
             #pragma target 3.5
-            #include "Assets/Custom RP/ShaderLibrary/Common.hlsl"
+            #include "Assets/Pipelines/Custom RP/ShaderLibrary/Common.hlsl"
             #include "Outlines.hlsl"
 
             #pragma shader_feature _ENABLE_OUTLINES

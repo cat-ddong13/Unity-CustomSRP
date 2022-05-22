@@ -15,7 +15,7 @@
 #endif
 
 #if defined(TCP2_HYBRID_URP)
-	// #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+	// #include "Assets/Pipelines/Universal RP/ShaderLibrary/Lighting.hlsl"
 	// This would cause a compilation error if URP isn't installed, so instead we use the dedicated
 	// "URP Support" file which contains all needed .hlslinc files embedded within a single file.
 	#include "TCP2 Hybrid URP Support.cginc"

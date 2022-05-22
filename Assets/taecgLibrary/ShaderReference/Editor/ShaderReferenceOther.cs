@@ -34,9 +34,9 @@ namespace taecg.tools.shaderReference
                     break;
                 case ShaderReferenceEditorWindow.Pipline.URP:
                     ShaderReferenceUtil.DrawOneContent("include", "#include \"Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl\"\n" +
-                        "#include \"Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl\"\n" +
-                        "#include \"Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl\"\n" +
-                        "#include \"Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl\"\n" +
+                        "#include \"Assets/Pipelines/Universal RP/ShaderLibrary/Core.hlsl\"\n" +
+                        "#include \"Assets/Pipelines/Universal RP/ShaderLibrary/Lighting.hlsl\"\n" +
+                        "#include \"Assets/Pipelines/Universal RP/ShaderLibrary/ShaderGraphFunctions.hlsl\"\n" +
                         "#include \"Packages/com.unity.render-pipelines.core/ShaderLibrary/UnityInstancing.hlsl\"");
                     ShaderReferenceUtil.DrawOneContent("CBUFFER_START(UnityPerMaterial)/CBUFFER_END", "将材质属性面板中的变量定义在这个常量缓冲区中，用于支持SRP Batcher.");
                     ShaderReferenceUtil.DrawOneContent("HLSLPROGRAM/ENDHLSL", "HLSL代码的开始与结束.");

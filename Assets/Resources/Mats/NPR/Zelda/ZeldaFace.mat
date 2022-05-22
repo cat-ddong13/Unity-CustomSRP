@@ -10,17 +10,17 @@ Material:
   m_Name: ZeldaFace
   m_Shader: {fileID: 4800000, guid: dddc8a0636ac4bb499c3c51e7f61d20a, type: 3}
   m_ValidKeywords:
-  - _MASK_MAP
   - _NORMAL_MAP
-  - _OUTLINE_INCLUDE_ASPECT_RATIO
-  - _OUTLINE_TANGENT_AS_NORMAL
-  - _OUTLINE_VERTEX_NORMAL
   - _RECEIVE_SHADOWS
   - _RIM_LIGHTING
   - _SPEC_MASK_MAP
   m_InvalidKeywords:
   - SURFACE_SHADOW_MAP
   - _
+  - _MASK_MAP
+  - _OUTLINE_INCLUDE_ASPECT_RATIO
+  - _OUTLINE_TANGENT_AS_NORMAL
+  - _OUTLINE_VERTEX_NORMAL
   - _SHADOWS_ON
   - _SPEC_MAP
   - _SURFACESHADOWS_ON
@@ -132,6 +132,7 @@ Material:
     - _DistortionStrength: 0.1
     - _DstBlend: 0
     - _FlipbookBlending: 0
+    - _FocusSpeed: 15
     - _Fresnel: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.5
@@ -189,6 +190,8 @@ Material:
     - _BaseColor: {r: 1, g: 0.8627451, b: 0.76862746, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _EyeballSize: {r: 0.05259, g: 0.02881, b: 0, a: 0}
+    - _FrontNormal: {r: 0.05259, g: 0.02881, b: 0, a: 0}
     - _OutlineColor: {r: 0.33962262, g: 0.23660211, b: 0.004805972, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecColor: {r: 0.24705882, g: 0.22352941, b: 0.16470589, a: 1}

@@ -25,7 +25,7 @@
 #VARIABLES
 /// IF USE_DEPTH_BUFFER
 	/// IF URP
-		#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DeclareDepthTexture.hlsl"
+		#include "Assets/Pipelines/Universal RP/ShaderLibrary/DeclareDepthTexture.hlsl"
 	/// ELSE
 		UNITY_DECLARE_DEPTH_TEXTURE(_CameraDepthTexture);
 	///

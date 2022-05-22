@@ -661,8 +661,8 @@ Shader "@%SHADER_NAME%@"
 		#define TCP2_TEX2D_SAMPLE_LOD(tex, samplertex, coord, lod)	SAMPLE_TEXTURE2D_LOD(tex, sampler##samplertex, coord, lod)
 ///
 
-		#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
-		#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+		#include "Assets/Pipelines/Universal RP/ShaderLibrary/Core.hlsl"
+		#include "Assets/Pipelines/Universal RP/ShaderLibrary/Lighting.hlsl"
 		[[MODULE:VARIABLES:Depth Texture]]
 
 /// IF TERRAIN_SHADER
@@ -2602,8 +2602,8 @@ Shader "@%SHADER_NAME%@"
 	#end_not_empty_block
 	#end_not_empty
 
-			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
-			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Shadows.hlsl"
+			#include "Assets/Pipelines/Universal RP/ShaderLibrary/Core.hlsl"
+			#include "Assets/Pipelines/Universal RP/ShaderLibrary/Shadows.hlsl"
 
 			ENDHLSL
 		}

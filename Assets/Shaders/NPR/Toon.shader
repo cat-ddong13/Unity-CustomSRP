@@ -53,7 +53,7 @@ Shader "Custom RP/Toon/Toon"
     }
     SubShader
     {
-        UsePass "Custom RP/Toon/Outlines/OUTLINES TEST"
+//        UsePass "Custom RP/Toon/Outlines/OUTLINES"
         Pass
         {
             Name "Toon Lit"
@@ -82,25 +82,23 @@ Shader "Custom RP/Toon/Toon"
             #pragma multi_compile _ LIGHTMAP_ON
             // gpu-instancing
             #pragma multi_compile_instancing
-            // 方向光阴影采样级别
-            #pragma multi_compile _ _DIRECTIONAL_PCF3 _DIRECTIONAL_PCF5 _DIRECTIONAL_PCF7
-            // 非平行光阴影采样级别
-            #pragma multi_compile _ _OTHER_PCF3 _OTHER_PCF5 _OTHER_PCF7
-            // 阴影级联融合方式
-            #pragma multi_compile _ _CASCADE_BLEND_SOFT _CASCADE_BLEND_DITHER
-            // 阴影遮罩
-            #pragma multi_compile _ _SHADOW_MASK_ALWAYS _SHADOW_MASK_DISTANCE
-            // LOD淡入淡出
-            #pragma multi_compile _ LOD_FADE_CROSSFADE
-
+            // // 方向光阴影采样级别
+            // #pragma multi_compile _ _DIRECTIONAL_PCF3 _DIRECTIONAL_PCF5 _DIRECTIONAL_PCF7
+            // // 非平行光阴影采样级别
+            // #pragma multi_compile _ _OTHER_PCF3 _OTHER_PCF5 _OTHER_PCF7
+            // // 阴影级联融合方式
+            // #pragma multi_compile _ _CASCADE_BLEND_SOFT _CASCADE_BLEND_DITHER
+            // // 阴影遮罩
+            // #pragma multi_compile _ _SHADOW_MASK_ALWAYS _SHADOW_MASK_DISTANCE
+            // // LOD淡入淡出
+            // #pragma multi_compile _ LOD_FADE_CROSSFADE
             #pragma shader_feature_local _SPEC_MASK_MAP
             #pragma shader_feature_local _RIM_LIGHTING
             #pragma shader_feature_local _SURFACE_SHADOW_RAMP
             #pragma shader_feature_local _USE_EYE_LIGHTING
             #pragma shader_feature_local _EYEBALL_FOCUS_CAMERA
 
-
-            #include "Assets/Custom RP/ShaderLibrary/Common.hlsl"
+            #include "Assets/Pipelines/Custom RP/ShaderLibrary/Common.hlsl"
             #include "ToonInput.hlsl"
             #include "ToonPasses.hlsl"
 

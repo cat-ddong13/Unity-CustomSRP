@@ -1,12 +1,12 @@
 #ifndef TOONPASSES_INCLUDE
 #define TOONPASSES_INCLUDE
 
-#include "Assets/Custom RP/ShaderLibrary/Surface.hlsl"
-#include "Assets/Custom RP/ShaderLibrary/Shadows.hlsl"
-#include "Assets/Custom RP/ShaderLibrary/Light.hlsl"
-#include "Assets/Custom RP/ShaderLibrary/BRDF.hlsl"
-#include "Assets/Custom RP/ShaderLibrary/GI.hlsl"
-#include "Assets/Custom RP/ShaderLibrary/Lighting.hlsl"
+#include "Assets/Pipelines/Custom RP/ShaderLibrary/Surface.hlsl"
+#include "Assets/Pipelines/Custom RP/ShaderLibrary/Shadows.hlsl"
+#include "Assets/Pipelines/Custom RP/ShaderLibrary/Light.hlsl"
+#include "Assets/Pipelines/Custom RP/ShaderLibrary/BRDF.hlsl"
+#include "Assets/Pipelines/Custom RP/ShaderLibrary/GI.hlsl"
+#include "Assets/Pipelines/Custom RP/ShaderLibrary/Lighting.hlsl"
 
 struct Attributes
 {
