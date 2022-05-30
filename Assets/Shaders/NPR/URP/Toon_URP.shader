@@ -6,21 +6,24 @@ Shader "Toon/Toon_URP"
         [HDR]_BaseColor("Base Color",Color) = (1.0,1.0,1.0,1.0)
         _DiffuseRange("Diffuse Range",Range(0,1)) = 0.5
 
-//        [KWEnum(_,On,_,Clip,_SHADOWS_CLIP,Dither,_SHADOWS_DITHER,Off,_SHADOW_OFF)]_Shadows("Shadows",Float) = 0
-//        [Toggle(_RECEIVE_SHADOWS)]_ReceiveShadows("Receive Shadows",Float) = 0
-
         [Main(SurfaceShadow,_,2)]_DiffuseGroup("SurfaceShadow",Float) = 0
-        [SubToggle(SurfaceShadow,_SURFACE_SHADOW_RAMP)]_UseSurfaceShadowRamp("_Use Surface Shadow Ramp",Float) = 0
-        [Sub(SurfaceShadow_SURFACE_SHADOW_RAMP)][NoScaleOffset]_SurfaceShadowMap("Surface Shadow Map",2D) = "white"{}
         [Sub(SurfaceShadow)]_SurfaceShadowSmooth("Surface Shadow Smooth",Range(0,1)) = 0
         [Sub(SurfaceShadow)]_SurfaceShadowColor("Surface Shadow Color",Color) = (0.0,.0,.0,1.0)
-    	[SubToggle(SurfaceShadow,_MAIN_LIGHT_SHADOWS)]_MainlightShadow("MainlightShadow",Float) = 0
+        [SubToggle(SurfaceShadow,_SURFACE_SHADOW_MASK)]_UseSurfaceShadowMask("Use Surface Shadow Mask",Float) = 0
+        [Sub(SurfaceShadow_SURFACE_SHADOW_MASK)][NoScaleOffset]_SurfaceShadowMask("Surface Shadow Mask",2D) = "white"{}
+        [SubToggle(SurfaceShadow,_SURFACE_SHADOW_RAMP)]_UseSurfaceShadowRamp("Use Surface Shadow Ramp",Float) = 0
+        [Sub(SurfaceShadow_SURFACE_SHADOW_RAMP)][NoScaleOffset]_SurfaceShadowRamp("Surface Shadow Ramp",2D) = "white"{}
 
         [Main(SpecMapGroup,_SPEC_MASK_MAP)]_SpecMapToggle("Specular",Float) = 0
         [Sub(SpecMapGroup)][NoScaleOffset]_SpecMaskMap("Spec Mask Map",2D) = "white"{}
         [Sub(SpecMapGroup)]_SpecColor("SpecColor",Color) = (1.0,1.0,1.0,1.0)
         [Sub(SpecMapGroup)]_SpecRange("Spec Range",Range(0,1)) = 0.1
         [Sub(SpecMapGroup)]_SpecTexRotate("Spec Tex Rotate",Range(0,180)) = 0
+        [SubToggle(SpecMapGroup,_SPEC_FLIP_BOOK)]_SpecFlipBookToggle("Spec Flip Book Toggle",Float) = 0
+        [Sub(SpecMapGroup_SPEC_FLIP_BOOK)][NoScaleOffset]_SpecFlipBook("Spec Flip Book",2D) = "white"{}
+        [SubToggle(SpecMapGroup_SPEC_FLIP_BOOK,_SPEC_FLIP_BOOK_BLEND)]_SpecFlipBookBlend("Spec Flip Book Blend",Float) = 0
+        [Sub(SpecMapGroup_SPEC_FLIP_BOOK_BLEND)]_SpecFlipBookBlendRatio("Spec Flip Book Blend Radio",Range(0,1)) = 0.5
+        [Sub(SpecMapGroup_SPEC_FLIP_BOOK)]_SpecFlipBookColor("Spec Flip Book Color",Color) = (1.0,1.0,1.0,1.0)
 
         [Main(RimLightingGroup,_RIM_LIGHTING)]_RimLightingToggle("Rim Lighting",Float) = 0
         [Sub(RimLightingGroup)]_RimColor("Rim Color",Color) = (1.0,1.0,1.0,1.0)
@@ -52,16 +55,21 @@ Shader "Toon/Toon_URP"
         [Sub(EyeballFocusCamera)]_FocusSpeed("Focus Speed",Float) = 15
         [Sub(EyeballFocusCamera)]_FrontNormal("Eyeball Size",Vector) = (0.05259,0.02881,0.0,0.0)
         [ToggleOff] _ReceiveShadows("Receive Shadows", Float) = 1.0
+
+        [Main(MatcapGroup,_USE_MATCAP)]_MatcapToggle("Matcap",Float) = 0
+        [Sub(MatcapGroup)][NoScaleOffset]_MatcapMap("Matcap Map",2D) = "white"{}
+        [Sub(MatcapGroup)]_MapcapColor("SpecColor",Color) = (1.0,1.0,1.0,1.0)
     }
     SubShader
     {
-        Tags{
-    			"RenderType" = "Opaque"
-    			"Queue" = "AlphaTest"
-    			"RenderPipeline" = "UniversalPipeline"
-    			"IgnoreProjector" = "True"
-    			"NatureRendererInstancing" = "True"
-    	}
+        Tags
+        {
+            "RenderType" = "Opaque"
+            "Queue" = "AlphaTest"
+            "RenderPipeline" = "UniversalPipeline"
+            "IgnoreProjector" = "True"
+            "NatureRendererInstancing" = "True"
+        }
         UsePass "Toon/Outlines_URP/OUTLINES"
         Pass
         {
@@ -100,20 +108,23 @@ Shader "Toon/Toon_URP"
             // #pragma multi_compile _ _SHADOW_MASK_ALWAYS _SHADOW_MASK_DISTANCE
             // // LOD淡入淡出
             // #pragma multi_compile _ LOD_FADE_CROSSFADE
-            
+
             #pragma shader_feature_local _SPEC_MASK_MAP
             #pragma shader_feature_local _RIM_LIGHTING
+            #pragma shader_feature_local _SURFACE_SHADOW_MASK
             #pragma shader_feature_local _SURFACE_SHADOW_RAMP
             #pragma shader_feature_local _USE_EYE_LIGHTING
             #pragma shader_feature_local _EYEBALL_FOCUS_CAMERA
+            #pragma shader_feature_local _SPEC_FLIP_BOOK
+            #pragma shader_feature_local _SPEC_FLIP_BOOK_BLEND
+            #pragma shader_feature_local _USE_MATCAP
 
             #pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
             #pragma multi_compile_fragment _ _SHADOWS_SOFT
-			
+
             #include "Assets/Pipelines/URP/ShaderLibrary/Core.hlsl"
-			#include "Assets/Pipelines/URP/ShaderLibrary/Lighting.hlsl"
-			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
-            // #include "UnityInput.hlsl"
+            #include "Assets/Pipelines/URP/ShaderLibrary/Lighting.hlsl"
+            #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 
             #include "Common_URP.hlsl"
             #include "ToonInput_URP.hlsl"
@@ -123,9 +134,9 @@ Shader "Toon/Toon_URP"
             #pragma fragment ToonPassFragment
             ENDHLSL
         }
-        
-//        UsePass "Universal Render Pipeline/Lit/SHADOWCASTER"
-//        UsePass "Universal Render Pipeline/Lit/META"
+
+        //        UsePass "Universal Render Pipeline/Lit/SHADOWCASTER"
+        //        UsePass "Universal Render Pipeline/Lit/META"
     }
     FallBack "Custom RP/Lit/CustomLit"
     CustomEditor "JTRP.ShaderDrawer.LWGUI"

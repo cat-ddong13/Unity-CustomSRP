@@ -32,10 +32,11 @@ struct Surface
     // 渲染层级位掩码
     uint renderingLayerMask;
 
+    // cell
     float3 specColor;
     float3 specMaskMap;
     float specRange;
-    
+
     float3 rimColor;
     float rimThreshold;
     float rimPower;
@@ -43,6 +44,44 @@ struct Surface
     float diffuseRange;
     float3 surfaceShadowColor;
     float surfaceShadowSmooth;
+
+    float4 shadowCoords;
+};
+
+struct ToonSurface
+{
+    // 世界坐标
+    float3 position;
+    // 法线
+    float3 normal;
+    // 视线方向
+    float3 viewDirection;
+    // 颜色
+    float3 color;
+    // 透明度
+    float alpha;
+
+    // 高光
+    float3 specColor;
+    float3 specMaskMap;
+    float specRange;
+    float2 specFlipbookUV;
+
+    // 边缘光
+    float3 rimColor;
+    float rimThreshold;
+    float rimPower;
+
+    // 漫反射和阴影区域
+    float diffuseRange;
+    float3 surfaceShadowColor;
+    float surfaceShadowSmooth;
+    float3 surfaceShadowMask;
+    float3 surfaceShadowRamp;
+    float4 shadowCoords;
+    float2 surfaceShadowRampUV;
+
+    float4 mapcap;
 };
 
 #endif

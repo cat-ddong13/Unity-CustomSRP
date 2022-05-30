@@ -16,6 +16,7 @@ Material:
   - _OUTLINE_TANGENT_AS_NORMAL
   - _OUTLINE_VERTEX_NORMAL
   - _RIM_LIGHTING
+  - _SPEC_MASK_MAP
   m_InvalidKeywords:
   - SURFACE_SHADOW_MAP
   - _
@@ -75,6 +76,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: 00e3ad4b91182044dbb6907f0a0f47bb, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _MatcapMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -92,6 +97,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecColor:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SpecFlipBook:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -115,6 +124,14 @@ Material:
         m_Texture: {fileID: 2800000, guid: c61de89ba9d6e214189a3f6afc7cea12, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SurfaceShadowMask:
+        m_Texture: {fileID: 2800000, guid: feb163957e6e2874ba9fbd304fb5da96, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SurfaceShadowRamp:
+        m_Texture: {fileID: 2800000, guid: 1a8f075471df45e4dafb7a79f97c504a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - _BumpScale: 1
@@ -126,7 +143,7 @@ Material:
     - _DetailNormalScale: 1
     - _DetailSmoothness: 1
     - _DiffuseGroup: 0
-    - _DiffuseRange: 0.4
+    - _DiffuseRange: 0.26
     - _Distortion: 0
     - _DistortionBlend: 1
     - _DistortionStrength: 0.1
@@ -141,6 +158,7 @@ Material:
     - _IsEye: 0
     - _MainlightShadow: 0
     - _MaskMapToggle: 1
+    - _MatcapToggle: 0
     - _Metallic: 0
     - _Mode: 0
     - _NearFade: 0
@@ -171,30 +189,36 @@ Material:
     - _SoftParticles: 0
     - _SoftParticlesDistance: 0
     - _SoftParticlesRange: 1
+    - _SpecFlipBookBlend: 0
+    - _SpecFlipBookBlendRatio: 0.5
+    - _SpecFlipBookToggle: 0
     - _SpecIntensity: 1
-    - _SpecMapToggle: 0
-    - _SpecRange: 0.2
+    - _SpecMapToggle: 1
+    - _SpecRange: 0.068
     - _SpecScale: 0.118
     - _SpecTexRotate: 0
     - _SpecularHighlights: 1
     - _SphereRadius: 0.1
     - _SrcBlend: 1
-    - _SurfaceShadowSmooth: 1
+    - _SurfaceShadowSmooth: 0.5
     - _SurfaceShadows: 0
     - _TestValue: 0
     - _UVSec: 0
+    - _UseSurfaceShadowMask: 0
     - _UseSurfaceShadowRamp: 0
     - _VertexColor: 0
     - _ZWrite: 1
     - _ZoomFixedWidth: 0
     m_Colors:
-    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _BaseColor: {r: 1, g: 0.8627451, b: 0.76862746, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EyeballSize: {r: 0.05259, g: 0.02881, b: 0, a: 0}
-    - _FrontNormal: {r: 0.05259, g: 0.02881, b: 0, a: 0}
+    - _FrontNormal: {r: 0.46368295, g: 0, b: 0.8860012, a: 0}
+    - _MapcapColor: {r: 1, g: 1, b: 1, a: 1}
     - _OutlineColor: {r: 0.33962262, g: 0.23660211, b: 0.004805972, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecColor: {r: 0.6320754, g: 0.5852235, b: 0.4680936, a: 1}
-    - _SurfaceShadowColor: {r: 0.8490566, g: 0.68313587, b: 0.5486828, a: 1}
+    - _SpecFlipBookColor: {r: 1, g: 1, b: 1, a: 1}
+    - _SurfaceShadowColor: {r: 0.78431374, g: 0.67058825, b: 0.5882353, a: 1}
   m_BuildTextureStacks: []

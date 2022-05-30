@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 899c54efeace73346a0a16faa3afe726, type: 3}
   m_Name: Vignette
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   color:
     m_OverrideState: 1
     m_Value: {r: 0.8291999, g: 0.90588236, b: 0.6117647, a: 1}
@@ -87,19 +87,19 @@ MonoBehaviour:
   active: 1
   threshold:
     m_OverrideState: 1
-    m_Value: 0.8
+    m_Value: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 2
+    m_Value: 3
   scatter:
     m_OverrideState: 1
-    m_Value: 0.55
+    m_Value: 0.6
   clamp:
     m_OverrideState: 0
     m_Value: 65472
   tint:
-    m_OverrideState: 0
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
+    m_OverrideState: 1
+    m_Value: {r: 1, g: 0.6313726, b: 0, a: 1}
   highQualityFiltering:
     m_OverrideState: 0
     m_Value: 0
@@ -130,10 +130,10 @@ MonoBehaviour:
     m_Value: 0
   contrast:
     m_OverrideState: 1
-    m_Value: -40
+    m_Value: -45
   colorFilter:
     m_OverrideState: 1
-    m_Value: {r: 0.8535576, g: 0.93333334, b: 0.6745098, a: 1}
+    m_Value: {r: 0.8349056, g: 0.9606918, b: 1, a: 1}
   hueShift:
     m_OverrideState: 0
     m_Value: 0
@@ -220,4 +220,4 @@ MonoBehaviour:
     m_Value: {fileID: 2800000, guid: afaed13bc53def7428256915ab4e219b, type: 3}
   contribution:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0.5

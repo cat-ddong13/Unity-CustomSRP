@@ -5,11 +5,18 @@ public class SendMsgToShader : MonoBehaviour
 {
     void Update()
     {
-        var mat = this.transform.GetComponent<SkinnedMeshRenderer>().sharedMaterial;
+        var rd = this.transform.GetComponent<Renderer>();
+        if (null == rd)
+            return;
+        
+        var mat = rd.sharedMaterial;
         if (null == mat)
             return;
 
         mat.SetVector("_FrontNormal",
-            new Vector4(this.transform.forward.x, this.transform.forward.y, this.transform.forward.z, 0));
+            this.transform.forward);
+        mat.SetVector("_LeftNormal",
+            -this.transform.right);
+        mat.SetFloat("_FrameCount", Time.frameCount);
     }
 }

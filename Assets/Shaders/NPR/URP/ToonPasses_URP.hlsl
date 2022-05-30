@@ -4,12 +4,14 @@
 #include "Assets/Pipelines/Custom RP/ShaderLibrary/Surface.hlsl"
 // #include "Assets/Custom RP/ShaderLibrary/GI.hlsl"
 // #include "Assets/Custom RP/ShaderLibrary/Lighting.hlsl"
+#include "ToonLighting.hlsl"
 
 struct Attributes
 {
     float3 positionOS:POSITION;
     float3 normalOS:NORMAL;
     float2 uv:TEXCOORD0;
+    float2 uv1:TEXCOORD1;
 
     #if defined(_NORMAL_MAP)
     float4 tangentOS:TANGENT;
@@ -29,7 +31,7 @@ struct Varyings
     float4 positionCS_SS:SV_POSITION;
     // world-space
     float3 positionWS:VAR_POSITION;
-    float3 normalWS:VAR_NORMAL;
+    float3 normalWS:VAR_NORMAL_WS;
     float2 uv:VAR_UV;
 
     #if defined(_DETAIL_MAP)
@@ -45,8 +47,20 @@ struct Varyings
     float2 specUV:VAR_SPEC_UV;
     #endif
 
+    #if defined(_SPEC_FLIP_BOOK)
+    float2 flipbookUV:VAR_FLIPBOOK_UV;
+    #endif
+
     #if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR)
     float4 shadowCoord: TEXCOORD6; // compute shadow coord per-vertex for the main light
+    #endif
+
+    #if defined(_SURFACE_SHADOW_MASK)
+    float2 surfaceShadowMaskUV:VAR_SHADOWMASK_UV;
+    #endif
+
+    #if defined(_SURFACE_SHADOW_RAMP)
+    float2 surfaceShadowRampUV:VAR_SHADOWRAMP_UV;
     #endif
 
     // GI_VARYINGS_DATA
@@ -55,19 +69,16 @@ struct Varyings
 
 float4 GetVertexShadowCoords(Varyings input)
 {
-    //https://github.com/Unity-Technologies/Graphics/blob/47c15c6a9746f2c9bf0635db2f3ab6669281f461/com.unity.render-pipelines.universal/ShaderLibrary/Shadows.hlsl#L423
-	
     #if defined(_MAIN_LIGHT_SHADOWS_SCREEN)
     return ComputeScreenPos(vertexData.positionCS);
     #else
 
     #if _SHADOWBIAS_CORRECTION
-    //Move the shadowed position slightly away from the camera to avoid banding artifacts
     float3 shadowPos = input.positionWS + (input.viewDir * SHADOW_BIAS_OFFSET);
     #else
     float3 shadowPos = input.positionWS;
     #endif
-	
+
     return TransformWorldToShadowCoord(shadowPos);
     #endif
 }
@@ -81,31 +92,6 @@ float4 GetPixelShadowCoords(Varyings input, float3 viewDirWS)
     #else
     return float4(0, 0, 0, 0);
     #endif
-    
-    // #if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR) //Per-vertex coord if no cascades are used
-    // return input.shadowCoord; 
-    // #elif defined(MAIN_LIGHT_CALCULATE_SHADOWS) //Shadow cascades
-    //
-    // #if defined(_MAIN_LIGHT_SHADOWS_SCREEN)
-    // //Screen-space shadow map (pre-resolved)
-    // return ComputeScreenPos(input.positionCS_SS);
-    // #else
-    //
-    // #if _SHADOWBIAS_CORRECTION
-    // //Move the shadowed position slightly away from the camera to avoid banding artifacts
-    // float3 shadowPos = input.positionWS + (viewDirWS * SHADOW_BIAS_OFFSET);
-    // #else
-    // float3 shadowPos = input.positionWS;
-    // #endif
-	   //
-    // //Cascades in use, calculate per-pixel now
-    // return TransformWorldToShadowCoord(shadowPos);
-    // #endif
-    //
-    // #else //No shadows
-    // //Unused, but needs to be initialized...
-    // return float4(0, 0, 0, 0);
-    // #endif
 }
 
 Varyings ToonPassVertex(Attributes input)
@@ -132,75 +118,27 @@ Varyings ToonPassVertex(Attributes input)
     #if defined(_SPEC_MASK_MAP)
     output.specUV = TransformSpecUV(input.uv);
     #endif
-    
+
+    #if defined(_SPEC_FLIP_BOOK)
+    output.flipbookUV = TransformSpecFlipbookUV(input.uv);
+    #endif
+
+    #if defined(_SURFACE_SHADOW_MASK)
+    output.surfaceShadowMaskUV = TransformSurfaceShadowMaskUV(input.uv);
+    #endif
+
+    #if defined(_SURFACE_SHADOW_RAMP)
+    output.surfaceShadowRampUV = TransformSurfaceShadowRampUV(input.uv1);
+
+    output.surfaceShadowRampUV = input.uv1;
+    #endif
+
     #if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR)
     output.shadowCoord = GetVertexShadowCoords(output);
     #endif
 
+
     return output;
-}
-
-float3 CelLighting(Surface surface, Light light)
-{
-    float3 finalColor = .0;
-    float3 specular = .0;
-
-    // 高光
-    float3 halfView = normalize(light.direction + surface.viewDirection);
-    float spec = max(0, dot(surface.normal, halfView));
-    float pixelWidth = fwidth(spec) * 0.5;
-    specular = surface.specColor * lerp(
-        0, 1, smoothstep(-pixelWidth, pixelWidth, spec + surface.specRange - 1)) * step(
-        0.0001, surface.specRange);
-    finalColor += light.color * specular * light.shadowAttenuation * surface.specMaskMap.r;
-
-    // 漫反射
-    float ndotl = dot(surface.normal, light.direction);
-    ndotl = ndotl * 0.5 + 0.5;
-    float shadowAtten = ndotl * light.shadowAttenuation;
-
-    float diffuse = (smoothstep(-pixelWidth + surface.diffuseRange, pixelWidth + surface.diffuseRange, ndotl) * surface.
-        surfaceShadowSmooth + step(surface.diffuseRange, ndotl) * (1.0 - surface.
-            surfaceShadowSmooth)) * shadowAtten;
-
-    float3 diffCol1 = diffuse * surface.color * light.color;
-    float3 diffCol2 = (1 - diffuse) * surface.surfaceShadowColor * surface.color;
-
-    #if defined(_SURFACE_SHADOW_RAMP)
-    float4 surfaceShadowRamp = GetSurfaceShadow(float2(ndotl, .0));
-    diffCol2 *= surfaceShadowRamp.r;
-    #endif
-
-    float3 diffColor = diffCol1 + diffCol2;
-    finalColor += diffColor;
-
-    //边缘光
-    #if defined(_RIM_LIGHTING)
-    float rimValue = pow(1 - dot(surface.normal, surface.viewDirection), surface.rimPower);
-    float rimStep = smoothstep(-pixelWidth + surface.rimThreshold, pixelWidth + surface.rimThreshold, rimValue);
-    float3 rimColor =  surface.color * light.color * rimStep * surface.rimColor * 2 * diffuse;
-    finalColor += rimColor;
-    #endif
-    
-    return finalColor;
-}
-
-float3 CelLighting(Surface surface)
-{
-    float3 color = float3(1, 0, 0);
-    // 平行光
-    // int dirLightCount = GetDirectionalLightCount();
-    // for (int i = 0; i < dirLightCount; i++)
-    // {
-    //     Light light = GetDirectionalLight(i, surface, shadowData);
-    //     // 判断渲染层是否有重叠
-    //     if (IsRenderingLayersOverlap(surface, light))
-    //     {
-    //         color += CelLighting(surface, light);
-    //     }
-    // }
-
-    return color;
 }
 
 float4 ToonPassFragment(Varyings input):SV_TARGET
@@ -218,36 +156,50 @@ float4 ToonPassFragment(Varyings input):SV_TARGET
     #if defined(_MASK_MAP)
     ic.useMask = true;
     #endif
-    //
-    // #if defined(_DETAIL_MAP)
-    // ic.useDetail = true;
-    // ic.detailUV = input.detailUV;
-    // #endif
-    //
+
     #if defined(_SPEC_MASK_MAP)
     ic.useSpec = true;
     ic.specUV = input.specUV;
     #endif
-    Surface surface = (Surface)0;
+
+    #if defined(_SURFACE_SHADOW_MASK)
+    ic.useSurfaceShadowMask = true;
+    ic.surfaceShadowMaskUV = input.surfaceShadowMaskUV;
+    #endif
+
+    #if defined(_SURFACE_SHADOW_RAMP)
+    ic.useSurfaceShadowRamp = true;
+    ic.surfaceShadowRampUV = input.surfaceShadowRampUV;
+    #endif
+
+    #if defined(_SPEC_FLIP_BOOK)
+    ic.useSpecFlipbook = true;
+    ic.specFlipbookUV = input.flipbookUV;
+    #endif
+
+    #if defined(_USE_MATCAP)
+    ic.useMatCap = true;
+    #endif
+
+    ToonSurface surface = (ToonSurface)0;
     surface.position = input.positionWS;
     surface.viewDirection = normalize(_WorldSpaceCameraPos - input.positionWS);
-    
-    ic.shadowCoord = GetPixelShadowCoords(input, surface.viewDirection);
+
     // 眼睛注视相机
     #if defined(_EYEBALL_FOCUS_CAMERA)
-    
-    float3 frontNormal = normalize(GetFrontNormal(ic).xyz);
-    
+
+    float3 frontNormal = normalize(GetFrontNormal().xyz);
+
     float ndotv = dot(frontNormal, surface.viewDirection);
-    ndotv = max(ndotv, 0.15);
-    
+    ndotv = max(ndotv, 0.65);
+
     float3 crossValue = cross(frontNormal, surface.viewDirection);
-    crossValue = float3(-crossValue.x, crossValue.y * ndotv, crossValue.z);
-    
+    crossValue = float3(-crossValue.x, crossValue.y, crossValue.z);
+
     float2 xy = (1 / ndotv - 1) * GetEyeballSize(ic).xy * ndotv * GetFocusSpeed(ic);
-    
-    ic.baseUV = input.uv + float2(xy.x * crossValue.y, xy.y * crossValue.x);
-    
+
+    ic.baseUV = input.uv + float2(xy.x * crossValue.y, -xy.y * crossValue.x);
+
     #endif
 
     float4 base = GetBase(ic);
@@ -256,19 +208,21 @@ float4 ToonPassFragment(Varyings input):SV_TARGET
     clip(base.a - GetCutoff(ic));
     #endif
 
-    surface.depth = -TransformWorldToView(input.positionWS).z;
     surface.color = base.rgb;
     surface.alpha = base.a;
-    surface.renderingLayerMask = asuint(unity_RenderingLayer.x);
+    surface.shadowCoords = GetPixelShadowCoords(input, surface.viewDirection);
 
     #if defined(_NORMAL_MAP)
     ic.normalUV = input.normalUV;
+
     surface.normal = normalize(NormalTangentToWorld(GetNormalTS(ic), input.normalWS,
                                                     input.tangentWS));
-    surface.interpolatedNormal = input.normalWS;
+
+    float3 normalOS = TransformWorldToObjectNormal(surface.normal);
+    ic.normalVS = TransformObject2ViewNormal(normalOS);
+
     #else
     surface.normal = normalize(input.normalWS);
-    surface.interpolatedNormal = surface.normal;
     #endif
 
     #if defined(_SPEC_MASK_MAP)
@@ -277,18 +231,36 @@ float4 ToonPassFragment(Varyings input):SV_TARGET
     surface.specRange = GetSpecRange(ic);
     #endif
 
+    #if defined(_SPEC_FLIP_BOOK)
+    surface.specFlipbookUV = ic.specFlipbookUV;
+    #endif
     #if defined(_RIM_LIGHTING)
     surface.rimColor = GetRimColor(ic);
     surface.rimPower = GetRimPower(ic);
     surface.rimThreshold = GetRimThreshold(ic);
     #endif
 
+    #if defined(_SURFACE_SHADOW_MASK)
+    surface.surfaceShadowMask = GetSurfaceShadowMaskMap(ic);
+    #endif
+
+    #if defined(_SURFACE_SHADOW_RAMP)
+    // surface.surfaceShadowRamp = GetSurfaceShadowRampMap(ic);
+    surface.surfaceShadowRampUV = input.surfaceShadowRampUV;
+    #endif
+
     surface.surfaceShadowColor = GetSurfaceShadowColor(ic);
     surface.diffuseRange = GetDiffuseRange(ic);
     surface.surfaceShadowSmooth = GetSurfaceShadowShadowSmooth(ic);
-    Light mainLight = GetMainLight(ic.shadowCoord);
-    // return float4(mainLight.shadowAttenuation * mainLight.distanceAttenuation,0,0,1);
-    float3 color = CelLighting(surface,mainLight);
+    float3 color = CelLighting(surface);
+
+    #if defined(_USE_MATCAP)
+    float3 viewDirVS = mul(UNITY_MATRIX_I_V, float4(surface.viewDirection, 0));
+    float4 matcap = GetMapcap(ic, viewDirVS);
+    // matcap = GetMapcap(input.matcapUV);
+    color += matcap.rgb;
+    #endif
+
     return float4(color, 1);
 }
 

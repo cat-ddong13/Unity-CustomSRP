@@ -191,7 +191,7 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EyeballSize: {r: 0.05259, g: 0.02881, b: 0, a: 0}
-    - _FrontNormal: {r: 0.05259, g: 0.02881, b: 0, a: 0}
+    - _FrontNormal: {r: -0.12242335, g: 0, b: 0.99247795, a: 0}
     - _OutlineColor: {r: 0.33962262, g: 0.23660211, b: 0.004805972, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecColor: {r: 0.24705882, g: 0.22352941, b: 0.16470589, a: 1}
